@@ -1,0 +1,23 @@
+# Reusable button list. Import inside a block's fieldset.
+form:
+  fields:
+    .buttons:
+      type: list
+      label: Buttons
+      style: vertical
+      btnLabel: Add button
+      fields:
+        .label: { type: text, label: Label }
+        .url: { type: text, label: URL }
+        .style:
+          type: select
+          label: Style
+          default: primary
+          options: { primary: Primary, secondary: Secondary, ghost: Ghost }
+        .icon: { type: iconpicker, label: Icon }
+        .new_tab:
+          type: toggle
+          label: Open in new tab
+          default: 0
+          options: { 1: PLUGIN_ADMIN.YES, 0: PLUGIN_ADMIN.NO }
+          validate: { type: bool }

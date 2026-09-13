@@ -1,0 +1,28 @@
+{% set brand = theme_var('brand') ?: {} %}
+{% set cta = theme_var('header.cta') %}
+<header class="site-header{{ theme_var('header.sticky') ? ' site-header--sticky' }}">
+    <div class="container site-header__inner">
+        {% include 'partials/logo.html.twig' %}
+
+        <nav id="site-nav" class="site-nav" aria-label="{{ 'THEME_MAW_STARTER.NAV.PRIMARY'|t }}">
+            {% block navigation %}
+                {% include 'partials/navigation.html.twig' %}
+            {% endblock %}
+        </nav>
+
+        <div class="site-header__actions">
+            {% if theme_var('color_toggle') %}
+                <button type="button" class="btn btn-ghost btn-icon mode-toggle" data-mode-toggle aria-label="{{ 'THEME_MAW_STARTER.NAV.TOGGLE_MODE'|t }}">
+                    <span class="when-light" aria-hidden="true">{% include 'partials/icon.html.twig' with {name: 'moon'} %}</span>
+                    <span class="when-dark" aria-hidden="true">{% include 'partials/icon.html.twig' with {name: 'sun'} %}</span>
+                </button>
+            {% endif %}
+            {% if cta.label and cta.url %}
+                <a class="btn btn-primary site-header__cta" href="{{ cta.url|e }}">{{ cta.label }}</a>
+            {% endif %}
+            <button type="button" class="btn btn-ghost btn-icon nav-toggle" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="{{ 'THEME_MAW_STARTER.NAV.MENU'|t }}">
+                {% include 'partials/icon.html.twig' with {name: 'menu'} %}
+            </button>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,11 @@
+{% set brand = theme_var('brand') ?: {} %}
+{% set logo = brand.logo ? maw_media(brand.logo) : null %}
+<a class="site-logo" href="{{ home_url }}">
+    {% if logo is maw_medium %}
+        <img src="{{ logo.url }}" alt="{{ site.title|e }}">
+    {% elseif logo %}
+        <img src="{{ logo|e }}" alt="{{ site.title|e }}">
+    {% else %}
+        <span>{{ brand.logo_text ?: site.title }}</span>
+    {% endif %}
+</a>

@@ -1,0 +1,42 @@
+title: Features
+description: Grid of icon + title + text items. Use for services, benefits, how-it-works.
+icon: fa-table-cells-large
+example:
+  type: features
+  eyebrow: Why us
+  heading: Everything you need
+  intro: Short supporting sentence.
+  columns: 3
+  style: cards
+  items:
+    - { icon: 'fa-bolt', title: Fast, text: Static-fast pages with no database. }
+    - { icon: 'fa-robot', title: AI ready, text: Every page is available as Markdown. }
+    - { icon: 'fa-lock', title: Secure, text: Nothing to inject into. }
+form:
+  # Adds the shared .buttons list (blueprints/blocks/_buttons.yaml) after the fields below
+  import@: { type: blocks/_buttons, context: 'theme://blueprints' }
+  fields:
+    .eyebrow: { type: text, label: Eyebrow }
+    .heading: { type: text, label: Heading }
+    .intro: { type: textarea, label: Intro (markdown), rows: 2 }
+    .columns:
+      type: select
+      label: Columns
+      default: 3
+      options: { 2: '2', 3: '3', 4: '4' }
+      validate: { type: int }
+    .style:
+      type: select
+      label: Style
+      default: plain
+      options: { plain: Plain, cards: Cards }
+    .items:
+      type: list
+      label: Items
+      style: vertical
+      collapsed: true
+      fields:
+        .icon: { type: iconpicker, label: Icon }
+        .title: { type: text, label: Title }
+        .text: { type: textarea, label: Text (markdown), rows: 2 }
+        .url: { type: text, label: Link URL (optional) }

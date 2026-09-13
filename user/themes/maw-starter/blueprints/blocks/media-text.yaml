@@ -1,0 +1,33 @@
+title: Media + text
+description: Image beside text, with optional checklist and buttons. Alternate image_side for zig-zag layouts.
+icon: fa-image
+example:
+  type: media-text
+  eyebrow: How it works
+  heading: Content lives in files
+  text: Every page is a folder with a Markdown file.
+  image: feature.jpg
+  image_side: right
+  checklist: |
+    Git-friendly
+    No database
+form:
+  # Adds the shared .buttons list (blueprints/blocks/_buttons.yaml) after the fields below
+  import@: { type: blocks/_buttons, context: 'theme://blueprints' }
+  fields:
+    .eyebrow: { type: text, label: Eyebrow }
+    .heading: { type: text, label: Heading }
+    .text: { type: markdown, label: Text }
+    .checklist: { type: textarea, label: Checklist (one item per line), rows: 3 }
+    .image: { type: filepicker, label: Image, preview_images: true, accept: ['image/*'] }
+    .image_alt: { type: text, label: Image alt text }
+    .image_side:
+      type: select
+      label: Image side
+      default: left
+      options: { left: Left, right: Right }
+    .image_ratio:
+      type: select
+      label: Image shape
+      default: natural
+      options: { natural: Natural, square: Square }

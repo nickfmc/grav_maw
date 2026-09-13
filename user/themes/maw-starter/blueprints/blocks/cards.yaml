@@ -1,0 +1,35 @@
+title: Cards
+description: Grid of hand-written cards (image, meta, title, text, link). For listing real pages use the collection block.
+icon: fa-clone
+example:
+  type: cards
+  heading: Our work
+  columns: 3
+  items:
+    - { title: Project one, text: Short description., url: /work/one, meta: Branding, image: one.jpg, link_label: View }
+form:
+  # Adds the shared .buttons list (blueprints/blocks/_buttons.yaml) after the fields below
+  import@: { type: blocks/_buttons, context: 'theme://blueprints' }
+  fields:
+    .eyebrow: { type: text, label: Eyebrow }
+    .heading: { type: text, label: Heading }
+    .intro: { type: textarea, label: Intro (markdown), rows: 2 }
+    .columns:
+      type: select
+      label: Columns
+      default: 3
+      options: { 2: '2', 3: '3', 4: '4' }
+      validate: { type: int }
+    .items:
+      type: list
+      label: Cards
+      style: vertical
+      collapsed: true
+      fields:
+        .image: { type: filepicker, label: Image, preview_images: true, accept: ['image/*'] }
+        .image_alt: { type: text, label: Image alt }
+        .meta: { type: text, label: Meta / label }
+        .title: { type: text, label: Title }
+        .text: { type: textarea, label: Text (markdown), rows: 2 }
+        .url: { type: text, label: Link URL }
+        .link_label: { type: text, label: Link label }

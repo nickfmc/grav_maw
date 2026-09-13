@@ -1,0 +1,33 @@
+{#
+  Contact block. `form` is the NAME of a form defined in this page's frontmatter `forms:` (Form plugin).
+  `details` show beside the form (address, phone, email...).
+#}
+{% embed 'blocks/_section.html.twig' %}
+    {% block inner %}
+        {% import 'macros/ui.html.twig' as ui %}
+        <div class="split contact">
+            <div class="stack contact__info">
+                {{ ui.head(block) }}
+                {{ ui.rich(block.text) }}
+                {% if block.details %}
+                    <ul class="contact__details">
+                        {% for d in block.details %}
+                            <li>
+                                {% if d.icon and theme_var('fontawesome') %}<span class="icon-badge"><i class="{{ d.icon|fa_icon }}" aria-hidden="true"></i></span>{% endif %}
+                                <span><strong>{{ d.label }}</strong><br>{% if d.url %}<a href="{{ d.url|e }}">{{ d.value }}</a>{% else %}{{ d.value }}{% endif %}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="card card__body contact__form">
+                {% set form_name = block.form|default(page.header.forms|keys|first) %}
+                {% if form_name and config.plugins.form.enabled %}
+                    {% include 'forms/form.html.twig' with {form: forms(form_name)} %}
+                {% else %}
+                    <p class="text-muted">Add a form under <code>forms:</code> in this page's frontmatter and set <code>form</code> on this block.</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}

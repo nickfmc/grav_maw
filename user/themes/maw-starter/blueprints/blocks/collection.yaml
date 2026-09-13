@@ -1,0 +1,59 @@
+title: Collection
+description: 'Lists real pages as cards or a list. source: @self.children, a route like /blog, or "@taxonomy.tag: news".'
+icon: fa-list
+example:
+  type: collection
+  heading: Latest posts
+  source: /blog
+  limit: 3
+  order_by: date
+  order_dir: desc
+  layout: cards
+  buttons:
+    - { label: All posts, url: /blog, style: secondary }
+form:
+  # Adds the shared .buttons list (blueprints/blocks/_buttons.yaml) after the fields below
+  import@: { type: blocks/_buttons, context: 'theme://blueprints' }
+  fields:
+    .eyebrow: { type: text, label: Eyebrow }
+    .heading: { type: text, label: Heading }
+    .intro: { type: textarea, label: Intro (markdown), rows: 2 }
+    .source:
+      type: text
+      label: Source
+      default: '@self.children'
+      help: '@self.children | /blog | @taxonomy.tag: news'
+    .limit: { type: number, label: Limit, default: 6, validate: { type: int, min: 1 } }
+    .order_by:
+      type: select
+      label: Order by
+      default: date
+      options: { date: Date, title: Title, folder: Folder, default: Default }
+    .order_dir:
+      type: select
+      label: Direction
+      default: desc
+      options: { desc: Descending, asc: Ascending }
+    .layout:
+      type: select
+      label: Layout
+      default: cards
+      options: { cards: Cards, list: List }
+    .columns:
+      type: select
+      label: Columns (cards)
+      default: 3
+      options: { 2: '2', 3: '3', 4: '4' }
+      validate: { type: int }
+    .show_image:
+      type: toggle
+      label: Show images
+      default: 1
+      options: { 1: PLUGIN_ADMIN.YES, 0: PLUGIN_ADMIN.NO }
+      validate: { type: bool }
+    .show_date:
+      type: toggle
+      label: Show dates
+      default: 1
+      options: { 1: PLUGIN_ADMIN.YES, 0: PLUGIN_ADMIN.NO }
+      validate: { type: bool }

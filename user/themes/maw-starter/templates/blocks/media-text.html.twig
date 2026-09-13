@@ -1,0 +1,23 @@
+{% embed 'blocks/_section.html.twig' %}
+    {% block inner %}
+        {% import 'macros/ui.html.twig' as ui %}
+        <div class="split{{ block.image_side == 'right' ? ' split--reverse' }} media-text">
+            <div class="media-text__media">
+                {{ ui.image(block.image, page, {alt: block.image_alt, width: 1100, height: block.image_ratio == 'square' ? 1100 : null, class: 'rounded'}) }}
+            </div>
+            <div class="media-text__content stack">
+                {% if block.eyebrow %}<span class="eyebrow">{{ block.eyebrow }}</span>{% endif %}
+                {% if block.heading %}<h2>{{ block.heading }}</h2>{% endif %}
+                {% if block.html %}<div class="prose">{{ block.html|raw }}</div>{% else %}{{ ui.rich(block.text) }}{% endif %}
+                {% if block.checklist %}
+                    <ul class="checklist">
+                        {% for line in block.checklist|split("\n")|map(l => l|trim)|filter(l => l) %}
+                            <li>{% include 'partials/icon.html.twig' with {name: 'check', size: 18} %}<span>{{ line }}</span></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {{ ui.buttons(block.buttons) }}
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}

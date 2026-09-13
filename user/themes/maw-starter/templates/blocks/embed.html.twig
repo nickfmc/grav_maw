@@ -1,0 +1,17 @@
+{#
+  Video / map / iframe embed.
+  url: YouTube, Vimeo or any https URL that allows iframing (converted by the maw_embed_url filter).
+#}
+{% embed 'blocks/_section.html.twig' %}
+    {% block inner %}
+        {% import 'macros/ui.html.twig' as ui %}
+        {% set src = block.url|maw_embed_url %}
+        {{ ui.head(block) }}
+        {% if src %}
+            <div class="embed" style="--ratio: {{ block.ratio|default('16 / 9')|replace({';': '', '}': '', '<': ''}) }}">
+                <iframe src="{{ src|e }}" title="{{ (block.title ?: block.heading ?: 'Embedded content')|e }}" loading="lazy" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+        {% endif %}
+        {% if block.caption %}<p class="text-muted embed__caption">{{ block.caption }}</p>{% endif %}
+    {% endblock %}
+{% endembed %}

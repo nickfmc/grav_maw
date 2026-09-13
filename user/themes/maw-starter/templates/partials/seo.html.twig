@@ -1,0 +1,36 @@
+{#
+  Open Graph, Twitter and JSON-LD. Core `partials/metadata.html.twig` (included before this) outputs
+  frontmatter `metadata:` and the <link rel="alternate" type="text/markdown"> for AI agents.
+  Per-page overrides in frontmatter: `description`, `og_image` (media ref), `metadata:`.
+#}
+{% set description = page.header.description ?: page.metadata.description.content ?? site.metadata.description %}
+{% set og_image = page.header.og_image ? maw_media(page.header.og_image, page) : (page.media.images|first ?: null) %}
+{% set og_image_url = og_image is maw_medium ? og_image.url(true, true) : og_image %}
+{% if description and not page.metadata.description %}<meta name="description" content="{{ description|striptags|e }}">{% endif %}
+<meta property="og:site_name" content="{{ site.title|e }}">
+<meta property="og:title" content="{{ (page.header.og_title ?: page.title)|e }}">
+<meta property="og:type" content="{{ page.template() == 'item' ? 'article' : 'website' }}">
+<meta property="og:url" content="{{ page.url(true, true) }}">
+{% if description %}<meta property="og:description" content="{{ description|striptags|e }}">{% endif %}
+{% if og_image_url %}<meta property="og:image" content="{{ og_image_url|e }}"><meta name="twitter:card" content="summary_large_image">{% endif %}
+
+{% set ld = page.home ? {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    'name': site.title,
+    'url': base_url_absolute ~ '/'
+} : (page.template() == 'item' ? {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    'headline': page.title,
+    'datePublished': page.date|date('c'),
+    'dateModified': page.modified|date('c'),
+    'author': {'@type': 'Person', 'name': page.header.author ?: site.author.name},
+    'url': page.url(true, true)
+} : {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    'name': page.title,
+    'url': page.url(true, true)
+}) %}
+<script type="application/ld+json">{{ ld|json_encode(constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_HEX_TAG'))|raw }}</script>

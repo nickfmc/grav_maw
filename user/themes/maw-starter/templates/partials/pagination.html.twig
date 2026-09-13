@@ -1,0 +1,24 @@
+{# Requires the `pagination` plugin to populate collection.params.pagination; renders nothing otherwise. #}
+{% set pagination = pagination|default(page.collection.params.pagination) %}
+{% set base_url = base_url|default(page.url) %}
+{% if pagination and pagination|length > 1 %}
+<nav aria-label="Pagination">
+    <ul class="pagination">
+        {% if pagination.hasPrev %}
+            <li><a rel="prev" href="{{ (base_url ~ pagination.params ~ pagination.prevUrl)|replace({'//': '/'}) }}">&lsaquo;</a></li>
+        {% endif %}
+        {% for p in pagination %}
+            {% if p.isCurrent %}
+                <li class="is-current"><span aria-current="page">{{ p.number }}</span></li>
+            {% elseif p.isInDelta %}
+                <li><a href="{{ (base_url ~ pagination.params ~ p.url)|replace({'//': '/'}) }}">{{ p.number }}</a></li>
+            {% elseif p.isDeltaBorder %}
+                <li class="is-disabled"><span>&hellip;</span></li>
+            {% endif %}
+        {% endfor %}
+        {% if pagination.hasNext %}
+            <li><a rel="next" href="{{ (base_url ~ pagination.params ~ pagination.nextUrl)|replace({'//': '/'}) }}">&rsaquo;</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}

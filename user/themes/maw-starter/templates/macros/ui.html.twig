@@ -1,0 +1,62 @@
+{#
+  Shared UI macros. Import with:  {% import 'macros/ui.html.twig' as ui %}
+
+  ui.head(block)                     eyebrow + heading + intro (markdown) as a .section-head
+  ui.buttons(block.buttons)          list of {label, url, style: primary|secondary|ghost, icon, new_tab}
+  ui.image(ref, page, opts)          responsive <img> from a media ref; opts: {width, height, alt, class, crop, eager}
+  ui.rich(text)                      markdown string -> HTML inside .prose
+#}
+
+{% macro head(block, level) %}
+    {% set level = level|default(block.heading_level|default(2)) %}
+    {% if block.eyebrow or block.heading or block.intro %}
+        <header class="section-head">
+            {% if block.eyebrow %}<span class="eyebrow">{{ block.eyebrow }}</span>{% endif %}
+            {% if block.heading %}<h{{ level }}>{{ block.heading }}</h{{ level }}>{% endif %}
+            {% if block.intro %}<div class="lead">{{ block.intro|markdown(false)|raw }}</div>{% endif %}
+        </header>
+    {% endif %}
+{% endmacro %}
+
+{% macro buttons(buttons, size) %}
+    {% set buttons = buttons|default([])|filter(b => b.label and b.url) %}
+    {% if buttons|length %}
+        <div class="button-row">
+            {% for b in buttons %}
+                <a class="btn btn-{{ b.style|default(loop.first ? 'primary' : 'secondary')|maw_slug }}{{ size ? ' btn-' ~ size }}"
+                   href="{{ b.url|e }}"{% if b.new_tab %} target="_blank" rel="noopener"{% endif %}>
+                    {% if b.icon %}<i class="{{ b.icon|fa_icon }}" aria-hidden="true"></i>{% endif %}
+                    {{ b.label }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro image(ref, page, opts) %}
+    {% set opts = opts|default({}) %}
+    {% set m = maw_media(ref, page) %}
+    {% set alt = opts.alt|default('') %}
+    {% set cls = opts.class|default('') %}
+    {% if m is maw_medium %}
+        {% if m.mime == 'image/svg+xml' or m.type != 'image' %}
+            <img src="{{ m.url }}" alt="{{ alt|e }}" class="{{ cls }}" loading="{{ opts.eager ? 'eager' : 'lazy' }}">
+        {% else %}
+            {% set w = opts.width|default(1200) %}
+            {% if opts.height and opts.crop is not same as(false) %}
+                {% set m = m.cropZoom(w, opts.height) %}
+            {% else %}
+                {% set m = m.cropResize(w, w * 2) %}
+            {% endif %}
+            {{ m.derivatives(360, w, 360).sizes(opts.sizes|default('(max-width: 860px) 100vw, 50vw')).loading(opts.eager ? 'eager' : 'lazy').html('', alt, cls)|raw }}
+        {% endif %}
+    {% elseif m %}
+        <img src="{{ m|e }}" alt="{{ alt|e }}" class="{{ cls }}" loading="{{ opts.eager ? 'eager' : 'lazy' }}">
+    {% elseif opts.placeholder is not same as(false) %}
+        <div class="media-placeholder {{ cls }}" role="presentation"></div>
+    {% endif %}
+{% endmacro %}
+
+{% macro rich(text, wide) %}
+    {% if text %}<div class="prose{{ wide ? ' prose--wide' }}">{{ text|markdown|raw }}</div>{% endif %}
+{% endmacro %}

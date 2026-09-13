@@ -1,0 +1,52 @@
+title: Blog listing
+extends@: default
+child_type: item
+
+form:
+  fields:
+    tabs:
+      fields:
+        advanced:
+          fields:
+            overrides:
+              fields:
+                header.child_type:
+                  default: item
+        listing:
+          type: tab
+          title: Listing
+          ordering@: content
+          fields:
+            header.content.items:
+              type: text
+              label: Items
+              default: '@self.children'
+            header.content.limit:
+              type: number
+              label: Items per page
+              default: 9
+              validate: { type: int, min: 1 }
+            header.content.order.by:
+              type: select
+              label: Order by
+              default: date
+              options: { date: Date, title: Title, folder: Folder, default: Default }
+            header.content.order.dir:
+              type: select
+              label: Direction
+              default: desc
+              options: { desc: Descending, asc: Ascending }
+            header.content.pagination:
+              type: toggle
+              label: Pagination
+              default: 1
+              highlight: 1
+              options: { 1: PLUGIN_ADMIN.ENABLED, 0: PLUGIN_ADMIN.DISABLED }
+              validate: { type: bool }
+            header.content.url_taxonomy_filters:
+              type: toggle
+              label: URL taxonomy filters (/tag:news)
+              default: 1
+              highlight: 1
+              options: { 1: PLUGIN_ADMIN.ENABLED, 0: PLUGIN_ADMIN.DISABLED }
+              validate: { type: bool }

@@ -1,0 +1,20 @@
+{#
+  Renders a list of blocks.
+  Usage: {% include 'blocks/_render.html.twig' with {blocks: page.header.blocks} %}
+
+  Stored shape (what Admin2 writes):  {type: faq, background: alt, faq: {heading: ..., items: [...]}}
+  Templates receive `block` FLATTENED: shared settings + the content under `<type>` merged on top.
+  Flat content (no `<type>` key) is still accepted, so hand-written YAML never renders blank.
+  Unknown types render blocks/_missing.html.twig (only visible when logged in or debugging).
+#}
+{% for raw in blocks|default([]) %}
+    {% if raw.type is defined and raw.type matches '/^[a-z0-9][a-z0-9-]*$/' and not raw.hidden %}
+        {% set content = raw[raw.type] ?? null %}
+        {% set block = content is iterable ? raw|merge(content) : raw %}
+        {% include ['blocks/' ~ raw.type ~ '.html.twig', 'blocks/_missing.html.twig'] with {
+            block: block,
+            index: loop.index,
+            first: loop.first
+        } %}
+    {% endif %}
+{% endfor %}

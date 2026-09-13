@@ -1,0 +1,8 @@
+/* Block: gallery - loaded only on pages that use it (see blocks/_section.html.twig) */
+@layer blocks {
+.block--gallery .gallery__item img { width: 100%; object-fit: cover; }
+.block--gallery .gallery__link { display: block; overflow: hidden; border-radius: var(--maw-radius-lg); }
+.block--gallery .gallery__link img { transition: transform 400ms var(--maw-ease); }
+.block--gallery .gallery__link:hover img { transform: scale(1.03); }
+.block--gallery figcaption { font-size: var(--maw-text-sm); color: var(--maw-text-muted); margin-top: var(--maw-space-2); }
+}

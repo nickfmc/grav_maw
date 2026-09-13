@@ -1,0 +1,30 @@
+title: Modular (one folder per section)
+extends@:
+  type: default
+  context: 'system://blueprints/pages'
+child_type: modular/rich-text
+
+form:
+  fields:
+    tabs:
+      fields:
+        advanced:
+          fields:
+            overrides:
+              fields:
+                header.child_type:
+                  default: modular/rich-text
+        modular:
+          type: tab
+          title: Modules
+          ordering@: content
+          fields:
+            header.content.items:
+              type: text
+              label: Items
+              default: '@self.modular'
+            header.content.order.by:
+              type: select
+              label: Order by
+              default: folder
+              options: { folder: Folder, title: Title, date: Date, default: Default }

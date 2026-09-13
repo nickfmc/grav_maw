@@ -1,0 +1,23 @@
+title: Testimonials
+description: Customer quotes with name, role and optional avatar.
+icon: fa-quote-left
+example:
+  type: testimonials
+  heading: What clients say
+  items:
+    - { quote: They shipped in two weeks., name: Alex Kim, role: 'CEO, Acme', image: alex.jpg }
+form:
+  fields:
+    .eyebrow: { type: text, label: Eyebrow }
+    .heading: { type: text, label: Heading }
+    .intro: { type: textarea, label: Intro (markdown), rows: 2 }
+    .items:
+      type: list
+      label: Testimonials
+      style: vertical
+      collapsed: true
+      fields:
+        .quote: { type: textarea, label: Quote, rows: 3 }
+        .name: { type: text, label: Name }
+        .role: { type: text, label: Role / company }
+        .image: { type: filepicker, label: Avatar, preview_images: true, accept: ['image/*'] }

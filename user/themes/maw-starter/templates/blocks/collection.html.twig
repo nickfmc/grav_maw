@@ -1,0 +1,39 @@
+{#
+  Lists pages using a Grav collection.
+  source: '@self.children' (default) | '/blog' (children of a route) | '@taxonomy.tag: news' style string
+#}
+{% set source = block.source|default('@self.children') %}
+{% if source starts with '/' %}
+    {% set items_def = {'@page.children': source} %}
+{% elseif source starts with '@taxonomy.' %}
+    {% set parts = source|split(':', 2) %}
+    {% set items_def = {(parts[0]|trim): parts[1]|default('')|trim} %}
+{% else %}
+    {% set items_def = source %}
+{% endif %}
+{% set collection = page.collection({
+    items: items_def,
+    order: {by: block.order_by|default('date'), dir: block.order_dir|default('desc')},
+    limit: block.limit|default(6)
+}, false) %}
+{% embed 'blocks/_section.html.twig' %}
+    {% block inner %}
+        {% import 'macros/ui.html.twig' as ui %}
+        {{ ui.head(block) }}
+        {% if block.layout == 'list' %}
+            <ul class="collection-list">
+                {% for item in collection %}
+                    <li><a href="{{ item.url }}">{{ item.title }}</a>{% if block.show_date is not same as(false) %} <time class="text-muted" datetime="{{ item.date|date('c') }}">{{ item.date|date(config.system.pages.dateformat.short ?: 'M j, Y') }}</time>{% endif %}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="grid grid--{{ block.columns|default(3) }}">
+                {% for item in collection %}
+                    {% include 'partials/card-page.html.twig' with {item: item, show_image: block.show_image is not same as(false), show_date: block.show_date is not same as(false)} %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if not collection|length %}<p class="text-muted">{{ 'THEME_MAW_STARTER.EMPTY'|t }}</p>{% endif %}
+        {{ ui.buttons(block.buttons) }}
+    {% endblock %}
+{% endembed %}

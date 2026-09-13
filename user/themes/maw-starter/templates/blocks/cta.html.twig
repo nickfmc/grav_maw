@@ -1,0 +1,11 @@
+{% embed 'blocks/_section.html.twig' with {default_background: 'accent', default_width: 'narrow'} %}
+    {% block inner %}
+        {% import 'macros/ui.html.twig' as ui %}
+        <div class="cta">
+            {% if block.eyebrow %}<span class="eyebrow">{{ block.eyebrow }}</span>{% endif %}
+            {% if block.heading %}<h2 class="cta__title">{{ block.heading }}</h2>{% endif %}
+            {% if block.text %}<div class="lead cta__text">{{ block.text|markdown|raw }}</div>{% endif %}
+            {{ ui.buttons(block.buttons, 'lg') }}
+        </div>
+    {% endblock %}
+{% endembed %}

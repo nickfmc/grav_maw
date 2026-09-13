@@ -1,0 +1,11 @@
+/* Block: pricing - loaded only on pages that use it (see blocks/_section.html.twig) */
+@layer blocks {
+.block--pricing .pricing { align-items: stretch; }
+.block--pricing .plan { position: relative; text-align: left; }
+.block--pricing .plan .card__body { gap: var(--maw-space-4); }
+.block--pricing .plan--featured { border: 2px solid var(--maw-accent); box-shadow: var(--maw-shadow-lg); }
+.block--pricing .plan__badge { align-self: flex-start; font-size: var(--maw-text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.25em 0.7em; border-radius: 999px; background: var(--maw-accent); color: var(--maw-accent-contrast); }
+.block--pricing .plan__amount { font-size: var(--maw-text-3xl); font-weight: 800; letter-spacing: -0.03em; }
+.block--pricing .plan__period { color: var(--maw-text-muted); }
+.block--pricing .plan__button { margin-top: auto; width: 100%; }
+}

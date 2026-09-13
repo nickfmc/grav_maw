@@ -1,0 +1,21 @@
+title: Stats
+description: Big numbers with labels (e.g. 250+ clients). Columns default to the number of items (max 4).
+icon: fa-chart-simple
+example:
+  type: stats
+  items:
+    - { value: '250+', label: Sites launched }
+    - { value: '99.9%', label: Uptime, text: Last 12 months }
+form:
+  fields:
+    .eyebrow: { type: text, label: Eyebrow }
+    .heading: { type: text, label: Heading }
+    .intro: { type: textarea, label: Intro (markdown), rows: 2 }
+    .items:
+      type: list
+      label: Stats
+      style: vertical
+      fields:
+        .value: { type: text, label: Value }
+        .label: { type: text, label: Label }
+        .text: { type: text, label: Small text }

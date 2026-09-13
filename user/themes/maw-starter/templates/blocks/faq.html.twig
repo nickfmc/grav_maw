@@ -1,0 +1,22 @@
+{% set items = block.items|default([])|filter(i => i.question) %}
+{% embed 'blocks/_section.html.twig' with {default_width: 'narrow'} %}
+    {% block inner %}
+        {% import 'macros/ui.html.twig' as ui %}
+        {{ ui.head(block) }}
+        <div class="faq">
+            {% for item in items %}
+                <details class="faq__item"{% if loop.first and block.open_first %} open{% endif %}>
+                    <summary>{{ item.question }}{% include 'partials/icon.html.twig' with {name: 'plus', size: 18} %}</summary>
+                    <div class="prose faq__answer">{{ item.answer|markdown|raw }}</div>
+                </details>
+            {% endfor %}
+        </div>
+        {% if block.schema is not same as(false) and items|length %}
+            {% set ld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': items|map(i => {
+                '@type': 'Question', 'name': i.question,
+                'acceptedAnswer': {'@type': 'Answer', 'text': i.answer|markdown|striptags}
+            })} %}
+            <script type="application/ld+json">{{ ld|json_encode(constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_HEX_TAG'))|raw }}</script>
+        {% endif %}
+    {% endblock %}
+{% endembed %}

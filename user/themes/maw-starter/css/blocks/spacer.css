@@ -1,0 +1,7 @@
+/* Block: spacer - loaded only on pages that use it (see blocks/_section.html.twig) */
+@layer blocks {
+.block--spacer { padding-block: var(--maw-space-6); }
+.spacer--sm { padding-block: var(--maw-space-4); }
+.spacer--lg { padding-block: var(--maw-space-9); }
+.block--spacer hr { margin: 0; }
+}

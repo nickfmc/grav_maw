@@ -1,0 +1,31 @@
+title: Blog post
+extends@: default
+
+form:
+  fields:
+    tabs:
+      fields:
+        post:
+          type: tab
+          title: Post
+          ordering@: content
+          fields:
+            header.description:
+              type: textarea
+              label: Summary
+              rows: 2
+            header.author:
+              type: text
+              label: Author
+            header.image:
+              type: filepicker
+              label: Featured image
+              preview_images: true
+              accept: ['image/*']
+            header.image_alt:
+              type: text
+              label: Featured image alt
+            header.taxonomy.tag:
+              type: selectize
+              label: Tags
+              validate: { type: commalist }

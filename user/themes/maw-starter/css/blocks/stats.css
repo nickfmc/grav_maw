@@ -1,0 +1,8 @@
+/* Block: stats - loaded only on pages that use it (see blocks/_section.html.twig) */
+@layer blocks {
+.block--stats .stat { padding: var(--maw-space-5); border-left: 3px solid var(--maw-accent); display: flex; flex-direction: column; }
+.block--stats .stat__value { order: -1; font-size: var(--maw-text-3xl); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin: 0; }
+.block--stats .stat__label { font-weight: 600; margin-top: var(--maw-space-2); }
+.block--stats .stat__text { color: var(--maw-text-muted); font-size: var(--maw-text-sm); margin: 0; }
+.block--stats.section--align-center .stat { border-left: 0; text-align: center; }
+}

@@ -1,0 +1,23 @@
+{% embed 'blocks/_section.html.twig' %}
+    {% block inner %}
+        {% import 'macros/ui.html.twig' as ui %}
+        {{ ui.head(block) }}
+        <div class="grid grid--{{ block.columns|default(3) }}">
+            {% for item in block.items|default([]) %}
+                {% set tag = item.url ? 'a' : 'article' %}
+                <{{ tag }} class="card"{% if item.url %} href="{{ item.url|e }}"{% endif %}>
+                    {% if item.image %}
+                        <div class="card__media">{{ ui.image(item.image, page, {alt: item.image_alt|default(''), width: 800, height: 500, placeholder: false, sizes: '(max-width: 640px) 100vw, 33vw'}) }}</div>
+                    {% endif %}
+                    <div class="card__body">
+                        {% if item.meta %}<span class="card__meta">{{ item.meta }}</span>{% endif %}
+                        {% if item.title %}<h3 class="card__title">{{ item.title }}</h3>{% endif %}
+                        {% if item.text %}<div class="card__text">{{ item.text|markdown(false)|raw }}</div>{% endif %}
+                        {% if item.url and item.link_label %}<span class="card__footer">{{ item.link_label }} &rarr;</span>{% endif %}
+                    </div>
+                </{{ tag }}>
+            {% endfor %}
+        </div>
+        {{ ui.buttons(block.buttons) }}
+    {% endblock %}
+{% endembed %}

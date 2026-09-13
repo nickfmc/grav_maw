@@ -1,0 +1,12 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block content %}
+    <section class="section section--space-lg section--align-center">
+        <div class="container container--narrow stack">
+            <p class="eyebrow">{{ page.header.http_response_code|default(404) }}</p>
+            <h1>{{ page.title|default('Page not found') }}</h1>
+            <div class="prose">{{ page.content|raw }}</div>
+            <div class="button-row"><a class="btn btn-primary" href="{{ home_url }}">{{ 'THEME_MAW_STARTER.BACK_HOME'|t }}</a></div>
+        </div>
+    </section>
+{% endblock %}

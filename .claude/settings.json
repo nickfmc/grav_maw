@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php user/themes/maw-starter/bin/maw.php:*)",
+      "Bash(php bin/grav clearcache:*)",
+      "Bash(php bin/gpm index:*)",
+      "Bash(php -l:*)",
+      "Bash(curl http://localhost:8000:*)",
+      "PowerShell(php user/themes/maw-starter/bin/maw.php:*)",
+      "PowerShell(php bin/grav clearcache:*)"
+    ],
+    "deny": [
+      "Edit(system/**)",
+      "Edit(vendor/**)"
+    ]
+  }
+}

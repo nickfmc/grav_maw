@@ -1,0 +1,33 @@
+title: FAQ
+description: Accordion of questions and markdown answers. Outputs FAQPage JSON-LD (set schema false to disable).
+icon: fa-circle-question
+example:
+  type: faq
+  heading: Questions
+  items:
+    - { question: Do you host sites?, answer: 'Yes, on **fast** managed servers.' }
+form:
+  fields:
+    .eyebrow: { type: text, label: Eyebrow }
+    .heading: { type: text, label: Heading }
+    .intro: { type: textarea, label: Intro (markdown), rows: 2 }
+    .open_first:
+      type: toggle
+      label: Open first item
+      default: 0
+      options: { 1: PLUGIN_ADMIN.YES, 0: PLUGIN_ADMIN.NO }
+      validate: { type: bool }
+    .schema:
+      type: toggle
+      label: Output FAQ schema (SEO)
+      default: 1
+      options: { 1: PLUGIN_ADMIN.YES, 0: PLUGIN_ADMIN.NO }
+      validate: { type: bool }
+    .items:
+      type: list
+      label: Questions
+      style: vertical
+      collapsed: true
+      fields:
+        .question: { type: text, label: Question }
+        .answer: { type: textarea, label: Answer (markdown), rows: 3 }

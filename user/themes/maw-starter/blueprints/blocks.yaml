@@ -1,0 +1,23 @@
+title: Blocks (page builder)
+extends@:
+  type: default
+  context: 'system://blueprints/pages'
+
+# Landing-page template: the page is a list of blocks. Schemas: blueprints/blocks/*.yaml
+form:
+  fields:
+    tabs:
+      fields:
+        blocks:
+          type: tab
+          title: Blocks
+          ordering@: content
+          fields:
+            header.content_position:
+              type: select
+              label: Markdown content position
+              default: top
+              options: { top: Above blocks, bottom: Below blocks, none: Hidden }
+          import@:
+            type: partials/blocks-field
+            context: 'theme://blueprints'

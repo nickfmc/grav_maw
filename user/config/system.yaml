@@ -2,7 +2,14 @@ home:
   alias: '/home'
 
 pages:
-  theme: quark2
+  theme: maw-starter
+  markdown_output:
+    enabled: true
+    frontmatter: true
+    links: true
+    max_links: 100
+    absolute_urls: true
+    token_header: true
 
 cache:
   enabled: true

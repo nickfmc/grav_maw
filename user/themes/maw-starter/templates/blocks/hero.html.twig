@@ -1,0 +1,20 @@
+{% set layout = block.layout|default(block.image ? 'split' : 'centered') %}
+{% set level = block.heading_level|default(first ? 1 : 2) %}
+{% embed 'blocks/_section.html.twig' with {default_spacing: 'lg', default_width: layout == 'centered' ? 'narrow' : 'default'} %}
+    {% block inner %}
+        {% import 'macros/ui.html.twig' as ui %}
+        <div class="hero hero--{{ layout|maw_slug }}">
+            <div class="hero__content">
+                {% if block.eyebrow %}<span class="eyebrow">{{ block.eyebrow }}</span>{% endif %}
+                {% if block.heading %}<h{{ level }} class="hero__title">{{ block.heading }}</h{{ level }}>{% endif %}
+                {% if block.text %}<div class="hero__text lead">{{ block.text|markdown|raw }}</div>{% endif %}
+                {{ ui.buttons(block.buttons, 'lg') }}
+            </div>
+            {% if layout != 'centered' and block.image %}
+                <div class="hero__media">
+                    {{ ui.image(block.image, page, {alt: block.image_alt, width: layout == 'background' ? 2000 : 1100, class: layout == 'split' ? 'rounded shadow-lg' : '', eager: true, sizes: layout == 'background' ? '100vw' : '(max-width: 860px) 100vw, 50vw'}) }}
+                </div>
+            {% endif %}
+        </div>
+    {% endblock %}
+{% endembed %}

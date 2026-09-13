@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "grav",
+      "runtimeExecutable": "php",
+      "runtimeArgs": ["-c", "C:\\Users\\nickf\\AppData\\Local\\Temp\\claude\\C--website-ongoing-git-grav-maw\\cbbba591-79ff-4941-98ef-7ed7f8017ac1\\scratchpad\\php.ini", "-S", "localhost:8000", "system/router.php"],
+      "port": 8000
+    }
+  ]
+}

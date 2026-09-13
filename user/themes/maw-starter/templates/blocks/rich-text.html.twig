@@ -1,0 +1,13 @@
+{% embed 'blocks/_section.html.twig' with {default_width: 'narrow'} %}
+    {% block inner %}
+        {% import 'macros/ui.html.twig' as ui %}
+        {{ ui.head(block) }}
+        {# `html` is set when rendered from a modular page (already-rendered content) #}
+        {% if block.html %}
+            <div class="prose{{ block.wide ? ' prose--wide' }}">{{ block.html|raw }}</div>
+        {% else %}
+            {{ ui.rich(block.text, block.wide) }}
+        {% endif %}
+        {{ ui.buttons(block.buttons) }}
+    {% endblock %}
+{% endembed %}

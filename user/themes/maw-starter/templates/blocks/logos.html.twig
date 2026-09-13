@@ -1,0 +1,19 @@
+{% embed 'blocks/_section.html.twig' with {default_spacing: 'sm'} %}
+    {% block inner %}
+        {% import 'macros/ui.html.twig' as ui %}
+        {% if block.heading %}<p class="logos__heading">{{ block.heading }}</p>{% endif %}
+        <ul class="logos">
+            {% for logo in block.items|default([]) %}
+                <li class="logos__item">
+                    {% if logo.url %}<a href="{{ logo.url|e }}" rel="noopener">{% endif %}
+                    {% if logo.image %}
+                        {{ ui.image(logo.image, page, {alt: logo.name, width: 320, placeholder: false, sizes: '160px'}) }}
+                    {% else %}
+                        <span class="logos__name">{{ logo.name }}</span>
+                    {% endif %}
+                    {% if logo.url %}</a>{% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+{% endembed %}

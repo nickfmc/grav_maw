@@ -1,0 +1,17 @@
+{% embed 'blocks/_section.html.twig' %}
+    {% block inner %}
+        {% import 'macros/ui.html.twig' as ui %}
+        {{ ui.head(block) }}
+        <div class="grid grid--{{ block.columns|default(min(3, block.items|default([])|length ?: 1)) }}">
+            {% for item in block.items|default([]) %}
+                <figure class="testimonial card card__body">
+                    <blockquote class="testimonial__quote">{{ item.quote|markdown(false)|raw }}</blockquote>
+                    <figcaption class="testimonial__author">
+                        {% if item.image %}{{ ui.image(item.image, page, {alt: '', width: 96, height: 96, class: 'testimonial__avatar', placeholder: false, sizes: '48px'}) }}{% endif %}
+                        <span><strong>{{ item.name }}</strong>{% if item.role %}<br><span class="text-muted">{{ item.role }}</span>{% endif %}</span>
+                    </figcaption>
+                </figure>
+            {% endfor %}
+        </div>
+    {% endblock %}
+{% endembed %}

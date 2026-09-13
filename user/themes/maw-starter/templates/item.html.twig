@@ -1,0 +1,42 @@
+{#
+  item: a single blog post. Frontmatter: title, date, taxonomy.tag/category, author, image (media ref), description.
+#}
+{% extends 'partials/base.html.twig' %}
+{% import 'macros/ui.html.twig' as ui %}
+
+{% block content %}
+    {% set blog = page.parent %}
+    <article class="page-body h-entry">
+        <div class="container container--narrow">
+            {% include 'partials/breadcrumbs.html.twig' %}
+            <header class="page-header">
+                <p class="eyebrow">
+                    <time class="dt-published" datetime="{{ page.date|date('c') }}">{{ page.date|date(config.system.pages.dateformat.long ?: 'F j, Y') }}</time>
+                    {% if page.header.author %} &middot; <span class="p-author">{{ page.header.author }}</span>{% endif %}
+                </p>
+                <h1 class="p-name">{{ page.title }}</h1>
+                {% if page.header.description %}<p class="lead p-summary">{{ page.header.description }}</p>{% endif %}
+            </header>
+
+            {% if page.header.image %}
+                <figure class="mb-6">{{ ui.image(page.header.image, page, {alt: page.header.image_alt|default(''), width: 1400, height: 760, class: 'rounded', eager: true, placeholder: false, sizes: '(max-width: 760px) 100vw, 44rem'}) }}</figure>
+            {% endif %}
+
+            <div class="prose e-content">{{ page.content|raw }}</div>
+
+            {% if page.taxonomy.tag %}
+                <ul class="tags mt-6">
+                    {% for tag in page.taxonomy.tag %}
+                        <li><a class="tag" href="{{ blog.url }}/tag{{ config.system.param_sep }}{{ tag|url_encode }}">#{{ tag }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <nav class="flex flex-wrap gap-4 mt-6" aria-label="Post navigation" style="justify-content: space-between">
+                {% if not page.isFirst %}<a href="{{ page.nextSibling.url }}">&larr; {{ page.nextSibling.title }}</a>{% endif %}
+                {% if not page.isLast %}<a href="{{ page.prevSibling.url }}">{{ page.prevSibling.title }} &rarr;</a>{% endif %}
+            </nav>
+        </div>
+    </article>
+    {% include 'blocks/_render.html.twig' with {blocks: page.header.blocks} %}
+{% endblock %}

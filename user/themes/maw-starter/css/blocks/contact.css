@@ -1,0 +1,7 @@
+/* Block: contact - loaded only on pages that use it (see blocks/_section.html.twig) */
+@layer blocks {
+.block--contact .contact { align-items: start; }
+.block--contact .contact__details { list-style: none; padding: 0; display: grid; gap: var(--maw-space-4); margin-top: var(--maw-space-6); }
+.block--contact .contact__details li { display: flex; gap: var(--maw-space-3); align-items: center; }
+.block--contact .section-head { margin-bottom: var(--maw-space-4); }
+}

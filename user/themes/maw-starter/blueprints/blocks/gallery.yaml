@@ -1,0 +1,41 @@
+title: Gallery
+description: Image grid from a hand-picked list, or every image in the page folder (from_page).
+icon: fa-images
+example:
+  type: gallery
+  heading: Gallery
+  columns: 3
+  from_page: false
+  items:
+    - { image: photo-1.jpg, caption: Our studio }
+form:
+  fields:
+    .eyebrow: { type: text, label: Eyebrow }
+    .heading: { type: text, label: Heading }
+    .intro: { type: textarea, label: Intro (markdown), rows: 2 }
+    .columns:
+      type: select
+      label: Columns
+      default: 3
+      options: { 2: '2', 3: '3', 4: '4' }
+      validate: { type: int }
+    .from_page:
+      type: toggle
+      label: Use all images in this page
+      default: 0
+      options: { 1: PLUGIN_ADMIN.YES, 0: PLUGIN_ADMIN.NO }
+      validate: { type: bool }
+    .crop:
+      type: toggle
+      label: Crop to 4:3
+      default: 1
+      options: { 1: PLUGIN_ADMIN.YES, 0: PLUGIN_ADMIN.NO }
+      validate: { type: bool }
+    .items:
+      type: list
+      label: Images
+      style: vertical
+      collapsed: true
+      fields:
+        .image: { type: filepicker, label: Image, preview_images: true, accept: ['image/*'] }
+        .caption: { type: text, label: Caption / alt }

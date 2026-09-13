@@ -1,0 +1,34 @@
+# Grav runtime (keep folder placeholders)
+/cache/*
+!/cache/.gitkeep
+/logs/*
+!/logs/.gitkeep
+/tmp/*
+!/tmp/.gitkeep
+/backup/*
+!/backup/.gitkeep
+/images/*
+!/images/.gitkeep
+/assets/*
+!/assets/.gitkeep
+
+# Per-environment secrets & accounts
+/user/accounts/*.yaml
+/user/data/*
+!/user/data/.gitkeep
+!/user/data/.htaccess
+/user/config/security.yaml
+.env
+.mcp.json
+
+# Tooling
+node_modules/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+
+# Grav 2 per-site secrets (salts, API signing keys) — generated on first run, never commit
+/user/config/*-private.php
+/user/config/plugins/*-private.php

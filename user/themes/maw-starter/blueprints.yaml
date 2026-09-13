@@ -1,0 +1,131 @@
+name: MAW Starter
+slug: maw-starter
+type: theme
+version: 1.0.0
+description: AI-friendly, block-based starter theme for Grav 2.1. Design tokens, a typed block library, zero build step.
+icon: cubes
+author:
+  name: Mountain Air Web
+  email: nick@mountainairweb.com
+  url: https://mountainairweb.com
+keywords: starter, blocks, page builder, ai, tokens, grav2
+license: MIT
+compatibility:
+  grav: ['2.1']
+dependencies:
+  - { name: grav, version: '>=2.1.0' }
+  - { name: form, version: '>=9.0.0' }
+
+form:
+  validation: loose
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      fields:
+
+        brand:
+          type: tab
+          title: Brand
+          fields:
+            brand.logo:
+              type: filepicker
+              folder: 'theme@:/images'
+              label: Logo (image in theme images/ or user/media)
+              preview_images: true
+            brand.logo_text:
+              type: text
+              label: Logo text
+              help: Shown when no logo image is set. Defaults to the site title.
+            brand.accent:
+              type: colorpicker
+              label: Accent color
+              default: '#2563eb'
+            brand.radius:
+              type: select
+              label: Corner radius
+              default: md
+              options: { none: None, sm: Small, md: Medium, lg: Large, pill: Pill }
+            brand.container:
+              type: text
+              label: Container max width
+              default: 72rem
+              size: small
+            brand.font_body:
+              type: text
+              label: Body font stack
+              default: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+            brand.font_heading:
+              type: text
+              label: Heading font stack
+              default: 'inherit'
+            brand.google_fonts:
+              type: text
+              label: Google Fonts CSS URL (optional)
+              placeholder: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap'
+
+        layout:
+          type: tab
+          title: Layout
+          fields:
+            theme_mode:
+              type: select
+              label: Color mode default
+              default: auto
+              options: { auto: Auto (OS), light: Light, dark: Dark }
+            color_toggle:
+              type: toggle
+              label: Show light/dark toggle
+              default: 1
+              highlight: 1
+              options: { 1: PLUGIN_ADMIN.ENABLED, 0: PLUGIN_ADMIN.DISABLED }
+              validate: { type: bool }
+            header.sticky:
+              type: toggle
+              label: Sticky header
+              default: 1
+              highlight: 1
+              options: { 1: PLUGIN_ADMIN.ENABLED, 0: PLUGIN_ADMIN.DISABLED }
+              validate: { type: bool }
+            header.cta:
+              type: fieldset
+              title: Header button
+              collapsible: true
+              fields:
+                header.cta.label: { type: text, label: Label }
+                header.cta.url: { type: text, label: URL }
+            blog_route:
+              type: text
+              label: Blog route
+              default: /blog
+              size: medium
+            fontawesome:
+              type: toggle
+              label: Load Font Awesome (CDN) for icons
+              default: 1
+              highlight: 1
+              options: { 1: PLUGIN_ADMIN.ENABLED, 0: PLUGIN_ADMIN.DISABLED }
+              validate: { type: bool }
+
+        footer:
+          type: tab
+          title: Footer
+          fields:
+            footer.text:
+              type: markdown
+              label: Footer text (markdown)
+            footer.links:
+              type: list
+              label: Footer links
+              style: vertical
+              fields:
+                .label: { type: text, label: Label }
+                .url: { type: text, label: URL }
+            footer.social:
+              type: list
+              label: Social links
+              style: vertical
+              fields:
+                .icon: { type: iconpicker, label: Icon }
+                .label: { type: text, label: Label }
+                .url: { type: text, label: URL }
