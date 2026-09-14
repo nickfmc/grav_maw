@@ -10,6 +10,14 @@ pages:
     max_links: 100
     absolute_urls: true
     token_header: true
+  # Editors must see saved changes immediately. Grav's default sends `max-age=604800`, so browsers
+  # reuse a page for 7 days. `no-cache` makes the browser ask again on every visit.
+  # ETags stay off: Grav derives them from the page file, so pages that display Flex objects or collections
+  # would answer "304 not modified" after the data changed. Grav's server-side cache still keeps renders fast;
+  # put a CDN/reverse-proxy cache in front for heavy production traffic.
+  expires: 0
+  cache_control: 'no-cache'
+  etag: false
 
 cache:
   enabled: true
