@@ -1,6 +1,7 @@
 title: Collection
 description: 'Lists real pages as cards or a list. source: @self.children, a route like /blog, or "@taxonomy.tag: news".'
 icon: fa-list
+category: dynamic
 example:
   type: collection
   heading: Latest posts

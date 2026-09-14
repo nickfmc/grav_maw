@@ -3,17 +3,18 @@ title: About
 subtitle: 'How this starter is put together'
 description: 'How the MAW Starter theme organises templates, blocks, tokens and AI tooling.'
 blocks:
-  -
-    type: faq
-    background: soft
-    faq:
-      eyebrow: FAQ
-      heading: 'FAQ Section Here'
-      intro: 'This is the intro'
-      items:
-        -
-          question: Question
-          answer: Answer
+    -
+        type: faq
+        background: soft
+        faq:
+            eyebrow: FAQ
+            heading: 'FAQ Section Here ok'
+            intro: 'This is the intro this is cool'
+            items:
+                -
+                    question: Question
+                    answer: Answer
+            schema: true
 ---
 
 This is a regular **default** page: a title, Markdown content, and optional blocks below it.

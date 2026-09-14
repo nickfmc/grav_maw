@@ -1,0 +1,14 @@
+{#
+  A single case study (Flex object). Renders its header, then its builder blocks.
+  `media_owner: object` makes bare image filenames resolve from the object's own folder.
+#}
+<article class="case-study">
+    <header class="section section--space-sm">
+        <div class="container container--narrow">
+            {% if object.client %}<p class="eyebrow">{{ object.client }}</p>{% endif %}
+            <h1>{{ object.title }}</h1>
+            {% if object.summary %}<p class="lead">{{ object.summary }}</p>{% endif %}
+        </div>
+    </header>
+    {% include 'blocks/_render.html.twig' with {blocks: object.blocks, media_owner: object} %}
+</article>

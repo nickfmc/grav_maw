@@ -3,6 +3,8 @@
 
     anchor      id attribute for in-page links (#pricing)
     background  none | alt | soft | accent | dark
+    bg_color    custom hex background (#rgb / #rrggbb), overrides `background`
+    text_color  auto | light | dark (with bg_color; auto picks by contrast)
     spacing     none | sm | md | lg
     width       narrow | default | wide | full
     align       left | center
@@ -20,12 +22,15 @@
 {% set block_css = 'theme://css/blocks/' ~ type ~ '.css' %}
 {% if url(block_css) %}{% do assets.addCss(block_css, 50) %}{% endif %}
 
-{% set bg = block.background|default(default_background|default('none'))|maw_slug %}
+{% set custom_bg = block.bg_color is defined and block.bg_color matches '/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/' ? block.bg_color : null %}
+{% set text_tone = custom_bg ? (block.text_color in ['light', 'dark'] ? block.text_color : custom_bg|maw_contrast) : null %}
+{% set bg = custom_bg ? 'custom' : block.background|default(default_background|default('none'))|maw_slug %}
 {% set classes = [
     'section',
     'block',
     'block--' ~ type,
     'section--bg-' ~ bg,
+    text_tone ? 'section--text-' ~ text_tone,
     'section--space-' ~ block.spacing|default(default_spacing|default('md'))|maw_slug,
     block.align ? 'section--align-' ~ block.align|maw_slug,
     block.variant ? 'block--' ~ type ~ '--' ~ block.variant|maw_slug,
@@ -34,9 +39,10 @@
 {% set width = block.width|default(default_width|default('default')) %}
 
 <section class="{{ classes|join(' ')|e }}"
+    {% if custom_bg %} style="--section-bg: {{ custom_bg }}"{% endif %}
     {% if block.anchor %} id="{{ block.anchor|maw_slug }}"{% endif %}
     {% if block.reveal %} data-reveal{% endif %}
-    data-block="{{ type }}">
+    data-block="{{ type }}"{% if index is defined %} data-block-index="{{ index - 1 }}"{% endif %}>
     <div class="container{{ width != 'default' ? ' container--' ~ width|maw_slug }}">
         {% block inner %}{% endblock %}
     </div>

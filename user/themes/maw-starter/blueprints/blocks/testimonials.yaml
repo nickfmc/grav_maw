@@ -1,6 +1,7 @@
 title: Testimonials
 description: Customer quotes with name, role and optional avatar.
 icon: fa-quote-left
+category: social-proof
 example:
   type: testimonials
   heading: What clients say

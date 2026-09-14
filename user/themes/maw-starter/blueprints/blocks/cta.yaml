@@ -1,6 +1,7 @@
 title: Call to action
 description: Centered heading, text and buttons on an accent background (change with background setting).
 icon: fa-bullhorn
+category: content
 example:
   type: cta
   heading: Ready to start?

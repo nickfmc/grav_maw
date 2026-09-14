@@ -1,6 +1,7 @@
 title: Embed
 description: Responsive iframe for YouTube, Vimeo, maps or any https URL. Ratio like "16 / 9" or "4 / 3".
 icon: fa-play
+category: media
 example:
   type: embed
   heading: Watch the demo

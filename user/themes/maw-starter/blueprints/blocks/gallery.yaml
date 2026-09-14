@@ -1,6 +1,7 @@
 title: Gallery
 description: Image grid from a hand-picked list, or every image in the page folder (from_page).
 icon: fa-images
+category: media
 example:
   type: gallery
   heading: Gallery

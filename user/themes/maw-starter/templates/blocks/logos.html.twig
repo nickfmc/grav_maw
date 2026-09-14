@@ -7,7 +7,7 @@
                 <li class="logos__item">
                     {% if logo.url %}<a href="{{ logo.url|e }}" rel="noopener">{% endif %}
                     {% if logo.image %}
-                        {{ ui.image(logo.image, page, {alt: logo.name, width: 320, placeholder: false, sizes: '160px'}) }}
+                        {{ ui.image(logo.image, media_owner ?? page, {alt: logo.name, width: 320, placeholder: false, sizes: '160px'}) }}
                     {% else %}
                         <span class="logos__name">{{ logo.name }}</span>
                     {% endif %}

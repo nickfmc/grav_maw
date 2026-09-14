@@ -1,0 +1,8 @@
+enabled: true
+built_in_css: true
+directories:
+  - 'blueprints://flex-objects/pages.yaml'
+  - 'blueprints://flex-objects/user-accounts.yaml'
+  - 'blueprints://flex-objects/user-groups.yaml'
+  # Example block-built content type from the maw-starter theme
+  - 'blueprints://flex-objects/case-studies.yaml'

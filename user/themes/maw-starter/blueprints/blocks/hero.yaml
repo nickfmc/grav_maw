@@ -1,6 +1,7 @@
 title: Hero
 description: Large intro section with headline, text, buttons and optional image. First hero on a page uses <h1>.
 icon: fa-star
+category: hero
 example:
   type: hero
   layout: split

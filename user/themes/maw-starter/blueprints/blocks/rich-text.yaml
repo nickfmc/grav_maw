@@ -1,6 +1,7 @@
 title: Rich text
 description: Markdown content section with optional heading and buttons. Narrow width by default.
 icon: fa-align-left
+category: content
 example:
   type: rich-text
   heading: About us

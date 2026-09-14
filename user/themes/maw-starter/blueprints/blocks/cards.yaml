@@ -1,6 +1,7 @@
 title: Cards
 description: Grid of hand-written cards (image, meta, title, text, link). For listing real pages use the collection block.
 icon: fa-clone
+category: content
 example:
   type: cards
   heading: Our work

@@ -12,6 +12,16 @@ form:
       label: Background
       default: none
       options: { none: None, alt: Subtle gray, soft: Accent tint, accent: Accent, dark: Dark }
+    .bg_color:
+      type: colorpicker
+      label: Custom background color
+      help: 'Hex color such as #0f766e. Overrides the Background preset.'
+    .text_color:
+      type: select
+      label: Text color
+      default: auto
+      help: Used with a custom background. Auto picks light or dark text for contrast.
+      options: { auto: Auto, light: Light, dark: Dark }
     .spacing:
       type: select
       label: Vertical spacing

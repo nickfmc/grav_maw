@@ -19,6 +19,7 @@
  *
  * Generated (do not edit by hand):
  *   blueprints/partials/blocks-field.yaml   Admin2 list field (elements per type + shared settings)
+ *   blueprints/partials/blocks-field-flex.yaml  same field named `blocks`, for Flex Object blueprints
  *   blueprints/modular/<type>.yaml          modular module blueprints (fields prefixed with header.)
  *   docs/ai/blocks.md                       block catalogue for humans and AI agents (repo root)
  */
@@ -132,6 +133,11 @@ function sync(string $themeDir, string $root): int
     ]];
     $itemFields['_settings_heading'] = ['type' => 'spacer', 'title' => 'Section settings'];
     $itemFields += settingsFields($themeDir);
+    // No defaults on list-item fields: Admin2 applies them to the list itself when a page is created,
+    // producing `blocks: {type: rich-text, ...}` (an object, not a list). Templates and the builder supply defaults.
+    foreach ($itemFields as $name => $f) {
+        unset($itemFields[$name]['default']);
+    }
 
     $field = ['form' => ['fields' => ['header.blocks' => [
         'type' => 'list',
@@ -143,6 +149,9 @@ function sync(string $themeDir, string $root): int
         'fields' => $itemFields,
     ]]]];
     writeYaml($themeDir . '/blueprints/partials/blocks-field.yaml', $field);
+    // Same field for Flex Object blueprints, where data is stored at the root (`blocks`, not `header.blocks`).
+    $flexField = ['form' => ['fields' => ['blocks' => $field['form']['fields']['header.blocks']]]];
+    writeYaml($themeDir . '/blueprints/partials/blocks-field-flex.yaml', $flexField);
 
     // 2. Modular module blueprints (module frontmatter is flat: header.<field>)
     foreach (glob($themeDir . '/blueprints/modular/*.yaml') ?: [] as $old) {
@@ -243,6 +252,10 @@ function normalize(string $themeDir, string $root): int
         $header = Yaml::parse($m[1]) ?: [];
         $before = $header;
         foreach (['blocks', 'blocks_after'] as $list) {
+            if (isset($header[$list]) && (!is_array($header[$list]) || !array_is_list($header[$list]))) {
+                // A single object (Admin2 applied item defaults to the list) or a scalar: not recoverable as blocks.
+                $header[$list] = [];
+            }
             if (!empty($header[$list]) && is_array($header[$list])) {
                 $header[$list] = array_map(fn ($b) => is_array($b) ? canonical($b, $keys) : $b, $header[$list]);
             }
@@ -436,6 +449,11 @@ function lint(string $themeDir, string $root): int
             continue;
         }
         foreach (['blocks', 'blocks_after'] as $list) {
+            if (isset($header[$list]) && (!is_array($header[$list]) || !array_is_list($header[$list]))) {
+                fwrite(STDOUT, "ERROR $rel: `$list` must be a list of blocks; run `maw.php normalize`\n");
+                $errors++;
+                continue;
+            }
             foreach ((array) ($header[$list] ?? []) as $i => $block) {
                 $type = is_array($block) ? ($block['type'] ?? null) : null;
                 if (!$type || !isset($blocks[$type])) {

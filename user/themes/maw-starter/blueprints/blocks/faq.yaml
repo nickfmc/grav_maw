@@ -1,6 +1,7 @@
 title: FAQ
 description: Accordion of questions and markdown answers. Outputs FAQPage JSON-LD (set schema false to disable).
 icon: fa-circle-question
+category: content
 example:
   type: faq
   heading: Questions

@@ -1,6 +1,7 @@
 title: Stats
 description: Big numbers with labels (e.g. 250+ clients). Columns default to the number of items (max 4).
 icon: fa-chart-simple
+category: social-proof
 example:
   type: stats
   items:

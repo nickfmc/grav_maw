@@ -24,6 +24,8 @@ If you write content flat by mistake, run `php user/themes/maw-starter/bin/maw.p
 |---|---|---|
 | `anchor` | text | '' |
 | `background` | none \| alt \| soft \| accent \| dark | 'none' |
+| `bg_color` | colorpicker | '' |
+| `text_color` | auto \| light \| dark | 'auto' |
 | `spacing` | none \| sm \| md \| lg | 'md' |
 | `width` | narrow \| default \| wide \| full | 'default' |
 | `align` | left \| center | 'left' |

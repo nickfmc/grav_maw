@@ -3,7 +3,7 @@
         {% import 'macros/ui.html.twig' as ui %}
         <div class="split{{ block.image_side == 'right' ? ' split--reverse' }} media-text">
             <div class="media-text__media">
-                {{ ui.image(block.image, page, {alt: block.image_alt, width: 1100, height: block.image_ratio == 'square' ? 1100 : null, class: 'rounded'}) }}
+                {{ ui.image(block.image, media_owner ?? page, {alt: block.image_alt, width: 1100, height: block.image_ratio == 'square' ? 1100 : null, class: 'rounded'}) }}
             </div>
             <div class="media-text__content stack">
                 {% if block.eyebrow %}<span class="eyebrow">{{ block.eyebrow }}</span>{% endif %}

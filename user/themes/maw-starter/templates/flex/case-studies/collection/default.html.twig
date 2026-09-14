@@ -1,0 +1,20 @@
+{# Case studies listing (Flex collection). Each card links to /<page-route>/id:<key>. #}
+<section class="section">
+    <div class="container">
+        <div class="grid grid--3">
+            {% for object in collection.filterBy({published: true}) %}
+                {# `page` is not passed into Flex render contexts; grav.page is the page hosting the listing. #}
+                <a class="card" href="{{ grav.page.url }}/id{{ config.system.param_sep }}{{ object.key }}">
+                    <div class="card__body">
+                        {% if object.client %}<span class="card__meta">{{ object.client }}</span>{% endif %}
+                        <h3 class="card__title">{{ object.title }}</h3>
+                        {% if object.summary %}<p class="card__text">{{ object.summary }}</p>{% endif %}
+                        <span class="card__footer">{{ 'THEME_MAW_STARTER.READ_MORE'|t }} &rarr;</span>
+                    </div>
+                </a>
+            {% else %}
+                <p class="text-muted">{{ 'THEME_MAW_STARTER.EMPTY'|t }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>

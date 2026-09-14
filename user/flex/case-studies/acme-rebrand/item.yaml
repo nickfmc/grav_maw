@@ -1,0 +1,20 @@
+published: true
+title: Acme rebrand
+client: Acme Co
+summary: A new identity and website launched in three weeks.
+blocks:
+  -
+    type: hero
+    hero:
+      layout: centered
+      eyebrow: Case study
+      heading: Rebranding Acme in three weeks
+      text: How a clear block system made a big launch simple.
+  -
+    type: stats
+    bg_color: '#0f766e'
+    align: center
+    stats:
+      items:
+        - { value: 3x, label: More enquiries }
+        - { value: 21, label: Days to launch }

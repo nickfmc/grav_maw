@@ -1,0 +1,105 @@
+# Example Flex directory that uses the block builder. Copy this file to create any block-built content type
+# (services, locations, landing pages, team members...). Enable it in Admin2 → Plugins → Flex Objects,
+# or list 'blueprints://flex-objects/case-studies.yaml' under `directories` in user/config/plugins/flex-objects.yaml.
+# Lives in user/blueprints (not the theme) because Admin2's API requests can run without the theme initialized,
+# so theme:// paths are not available there. The blocks field import therefore uses themes://<theme-name>/.
+title: Case studies
+description: Client projects built with blocks.
+type: flex-objects
+
+config:
+  admin:
+    router:
+      path: '/case-studies'
+    menu:
+      list:
+        route: '/case-studies'
+        title: Case studies
+        icon: fa-briefcase
+        authorize: ['admin.case-studies.list', 'admin.super']
+        priority: 3
+    template: default
+    permissions:
+      admin.case-studies:
+        type: crudpl
+        label: Case studies
+      api.case-studies:
+        type: crudpl
+        label: Case studies API
+    list:
+      title: title
+      fields:
+        published:
+          field: { type: toggle, label: Publ }
+          width: 8
+        title:
+          link: edit
+        client:
+        updated_timestamp:
+          label: Updated
+    edit:
+      title:
+        template: "{{ object.title ?? 'New case study' }}"
+
+  site:
+    templates:
+      collection:
+        paths: ['flex/{TYPE}/collection/{LAYOUT}{EXT}']
+      object:
+        paths: ['flex/{TYPE}/object/{LAYOUT}{EXT}']
+      defaults:
+        type: case-studies
+        layout: default
+
+  data:
+    object: 'Grav\Common\Flex\Types\Generic\GenericObject'
+    collection: 'Grav\Common\Flex\Types\Generic\GenericCollection'
+    index: 'Grav\Common\Flex\Types\Generic\GenericIndex'
+    storage:
+      # Folder storage: one folder per object, so each object gets its own media (images for its blocks).
+      class: 'Grav\Framework\Flex\Storage\FolderStorage'
+      options:
+        formatter:
+          class: 'Grav\Framework\File\Formatter\YamlFormatter'
+        # Under user/ (not user/data) so object images are publicly reachable; YAML stays blocked by .htaccess.
+        folder: 'user://flex/case-studies'
+    ordering:
+      updated_timestamp: DESC
+    search:
+      options: { contains: 1 }
+      fields: [title, client, summary]
+
+form:
+  validation: loose
+  fields:
+    tabs:
+      type: tabs
+      fields:
+        details:
+          type: tab
+          title: Details
+          fields:
+            published:
+              type: toggle
+              label: Published
+              highlight: 1
+              default: 1
+              options: { 1: PLUGIN_ADMIN.YES, 0: PLUGIN_ADMIN.NO }
+              validate: { type: bool }
+            title:
+              type: text
+              label: Title
+              validate: { required: true }
+            client:
+              type: text
+              label: Client
+            summary:
+              type: textarea
+              label: Summary
+              rows: 3
+        content:
+          type: tab
+          title: Page builder
+          import@:
+            type: partials/blocks-field-flex
+            context: 'themes://maw-starter/blueprints'

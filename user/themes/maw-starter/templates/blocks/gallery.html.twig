@@ -1,5 +1,5 @@
 {# Images come from `items` ({image, caption}) or, when `from_page: true`, every image in the page folder. #}
-{% set items = block.from_page ? page.media.images|map(m => {image: m.filename, caption: m.meta.caption ?? ''}) : block.items|default([]) %}
+{% set items = block.from_page ? (media_owner ?? page).media.images|map(m => {image: m.filename, caption: m.meta.caption ?? ''}) : block.items|default([]) %}
 {% embed 'blocks/_section.html.twig' %}
     {% block inner %}
         {% import 'macros/ui.html.twig' as ui %}
@@ -7,9 +7,9 @@
         <div class="gallery grid grid--{{ block.columns|default(3) }}">
             {% for item in items %}
                 <figure class="gallery__item">
-                    {% set m = maw_media(item.image, page) %}
+                    {% set m = maw_media(item.image, media_owner ?? page) %}
                     {% if m is maw_medium and block.lightbox is not same as(false) %}<a href="{{ m.url }}" class="gallery__link">{% endif %}
-                    {{ ui.image(item.image, page, {alt: item.caption, width: 900, height: block.crop is same as(false) ? null : 675, class: 'rounded', sizes: '(max-width: 640px) 100vw, 33vw'}) }}
+                    {{ ui.image(item.image, media_owner ?? page, {alt: item.caption, width: 900, height: block.crop is same as(false) ? null : 675, class: 'rounded', sizes: '(max-width: 640px) 100vw, 33vw'}) }}
                     {% if m is maw_medium and block.lightbox is not same as(false) %}</a>{% endif %}
                     {% if item.caption %}<figcaption>{{ item.caption }}</figcaption>{% endif %}
                 </figure>

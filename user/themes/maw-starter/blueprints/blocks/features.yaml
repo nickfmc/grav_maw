@@ -1,6 +1,7 @@
 title: Features
 description: Grid of icon + title + text items. Use for services, benefits, how-it-works.
 icon: fa-table-cells-large
+category: content
 example:
   type: features
   eyebrow: Why us

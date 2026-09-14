@@ -1,13 +1,18 @@
 {#
   Renders a list of blocks.
-  Usage: {% include 'blocks/_render.html.twig' with {blocks: page.header.blocks} %}
+  Usage (page):        {% include 'blocks/_render.html.twig' with {blocks: page.header.blocks} %}
+  Usage (Flex object): {% include 'blocks/_render.html.twig' with {blocks: object.blocks, media_owner: object} %}
+    `media_owner` is where bare image filenames are looked up (defaults to the current page).
 
   Stored shape (what Admin2 writes):  {type: faq, background: alt, faq: {heading: ..., items: [...]}}
   Templates receive `block` FLATTENED: shared settings + the content under `<type>` merged on top.
   Flat content (no `<type>` key) is still accepted, so hand-written YAML never renders blank.
   Unknown types render blocks/_missing.html.twig (only visible when logged in or debugging).
 #}
-{% for raw in blocks|default([]) %}
+{# Only a list renders; a single object (bad data) is ignored instead of rendering garbage. #}
+{% set blocks = blocks|default([]) %}
+{% set blocks = blocks is iterable and (blocks|length == 0 or (blocks|keys|first) is same as(0)) ? blocks : [] %}
+{% for raw in blocks %}
     {% if raw.type is defined and raw.type matches '/^[a-z0-9][a-z0-9-]*$/' and not raw.hidden %}
         {% set content = raw[raw.type] ?? null %}
         {% set block = content is iterable ? raw|merge(content) : raw %}

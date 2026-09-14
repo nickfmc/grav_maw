@@ -1,6 +1,7 @@
 title: Contact
 description: Contact details beside a Form plugin form. `form` is the name of a form under `forms:` in the same page frontmatter.
 icon: fa-envelope
+category: forms
 example:
   type: contact
   heading: Get in touch

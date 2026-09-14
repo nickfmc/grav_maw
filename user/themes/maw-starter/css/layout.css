@@ -59,6 +59,11 @@
   .section--bg-accent { background: var(--maw-accent); color: var(--maw-accent-contrast); --maw-link: currentColor; --maw-text-muted: color-mix(in oklab, currentColor 80%, transparent); }
   .section--bg-dark { background: #0b1120; color: #e6eaf2; --maw-text: #e6eaf2; --maw-text-muted: #9aa7bd; --maw-border: #22304a; --maw-surface: #131d33; --maw-bg-alt: #111a2e; --maw-link: color-mix(in oklab, var(--maw-accent) 70%, white); }
   .section--bg-soft { background: var(--maw-accent-soft); }
+  /* Custom hex background (block setting bg_color); text tone from text_color or automatic contrast */
+  .section--bg-custom { background: var(--section-bg); }
+  .section--text-light { color: #f8fafc; --maw-text: #f8fafc; --maw-text-muted: rgb(248 250 252 / 0.78); --maw-border: rgb(255 255 255 / 0.18); --maw-surface: rgb(255 255 255 / 0.06); --maw-bg-alt: rgb(255 255 255 / 0.06); --maw-link: currentColor; }
+  .section--text-dark { color: #0f172a; --maw-text: #0f172a; --maw-text-muted: rgb(15 23 42 / 0.72); --maw-border: rgb(15 23 42 / 0.14); --maw-surface: rgb(255 255 255 / 0.7); --maw-bg-alt: rgb(15 23 42 / 0.05); --maw-link: currentColor; }
+  .section--text-light .eyebrow, .section--text-dark .eyebrow { color: inherit; opacity: 0.8; }
   .section--align-center { text-align: center; }
   .section--align-center .section-head, .section--align-center .stack > * { margin-inline: auto; }
   /* Two plain sections in a row share one gap instead of doubling it */

@@ -54,6 +54,7 @@ class MawStarter extends Theme
         $env->addFilter(new TwigFilter('fa_icon', [$this, 'faIconClass']));
         $env->addFilter(new TwigFilter('maw_embed_url', [$this, 'embedUrl']));
         $env->addFilter(new TwigFilter('maw_slug', [$this, 'slug']));
+        $env->addFilter(new TwigFilter('maw_contrast', [$this, 'contrastTone']));
         // `{% if x is maw_medium %}` — true for Grav media objects (resizable), false for URL strings.
         $env->addTest(new TwigTest('maw_medium', static fn ($v) => $v instanceof MediaObjectInterface));
     }
@@ -95,9 +96,11 @@ class MawStarter extends Theme
      * Accepts: a page media filename ("hero.jpg"), a stream ("user://media/x.jpg",
      * "theme://images/x.svg"), a root path ("/user/media/x.jpg") or a full URL.
      *
+     * `$owner` is the page (or Flex object) whose folder holds bare filenames; defaults to the current page.
+     *
      * @return MediaObjectInterface|string|null
      */
-    public function resolveMedia($ref, ?PageInterface $page = null)
+    public function resolveMedia($ref, $owner = null)
     {
         if (is_array($ref)) {
             // Admin2 media fields may store a list or an object with a path/name.
@@ -116,10 +119,16 @@ class MawStarter extends Theme
         }
 
         $grav = Grav::instance();
-        $page = $page ?? $grav['page'] ?? null;
+        $owner = $owner ?? $grav['page'] ?? null;
+        // Pages expose media(); Flex objects expose getMedia().
+        $media = match (true) {
+            $owner instanceof PageInterface => $owner->media(),
+            is_object($owner) && method_exists($owner, 'getMedia') => $owner->getMedia(),
+            default => null,
+        };
 
-        if (!str_contains($ref, '://') && !str_starts_with($ref, '/') && $page) {
-            $medium = $page->media()->get($ref);
+        if (!str_contains($ref, '://') && !str_starts_with($ref, '/') && $media) {
+            $medium = $media->get($ref);
             if ($medium) {
                 return $medium;
             }
@@ -177,6 +186,29 @@ class MawStarter extends Theme
         }
 
         return str_starts_with($url, 'https://') ? $url : '';
+    }
+
+    /**
+     * 'light' or 'dark': which text tone reads best on a hex background (WCAG relative luminance).
+     */
+    public function contrastTone(?string $hex): string
+    {
+        $hex = ltrim((string) $hex, '#');
+        if (strlen($hex) === 3) {
+            $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+        }
+        if (!preg_match('/^[0-9a-f]{6}$/i', $hex)) {
+            return 'dark';
+        }
+        $lin = static function (int $c): float {
+            $c /= 255;
+            return $c <= 0.03928 ? $c / 12.92 : (($c + 0.055) / 1.055) ** 2.4;
+        };
+        [$r, $g, $b] = array_map('hexdec', str_split($hex, 2));
+        $l = 0.2126 * $lin($r) + 0.7152 * $lin($g) + 0.0722 * $lin($b);
+
+        // Pick whichever of white (L=1) or near-black (#0f172a, L≈0.0097) gives the higher contrast ratio.
+        return (1.05 / ($l + 0.05)) >= (($l + 0.05) / 0.0597) ? 'light' : 'dark';
     }
 
     public function slug(?string $value): string

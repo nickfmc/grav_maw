@@ -1,5 +1,5 @@
 {# Vertical space, optionally with a divider line. size: sm | md | lg. Does not use _section (no container padding). #}
 {% do assets.addCss('theme://css/blocks/spacer.css', 50) %}
-<div class="block--spacer spacer--{{ block.size|default('md')|maw_slug }}{{ block.class ? ' ' ~ block.class }}" aria-hidden="true">
+<div class="block--spacer spacer--{{ block.size|default('md')|maw_slug }}{{ block.class ? ' ' ~ block.class }}" aria-hidden="true" data-block="spacer"{% if index is defined %} data-block-index="{{ index - 1 }}"{% endif %}>
     {% if block.divider %}<div class="container"><hr></div>{% endif %}
 </div>

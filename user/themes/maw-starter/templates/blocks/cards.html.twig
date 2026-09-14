@@ -7,7 +7,7 @@
                 {% set tag = item.url ? 'a' : 'article' %}
                 <{{ tag }} class="card"{% if item.url %} href="{{ item.url|e }}"{% endif %}>
                     {% if item.image %}
-                        <div class="card__media">{{ ui.image(item.image, page, {alt: item.image_alt|default(''), width: 800, height: 500, placeholder: false, sizes: '(max-width: 640px) 100vw, 33vw'}) }}</div>
+                        <div class="card__media">{{ ui.image(item.image, media_owner ?? page, {alt: item.image_alt|default(''), width: 800, height: 500, placeholder: false, sizes: '(max-width: 640px) 100vw, 33vw'}) }}</div>
                     {% endif %}
                     <div class="card__body">
                         {% if item.meta %}<span class="card__meta">{{ item.meta }}</span>{% endif %}

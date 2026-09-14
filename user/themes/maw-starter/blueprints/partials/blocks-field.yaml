@@ -12,7 +12,6 @@ form:
         .type:
           type: elements
           label: 'Block type'
-          default: rich-text
           options:
             cards: Cards
             collection: Collection
@@ -122,17 +121,27 @@ form:
         .background:
           type: select
           label: Background
-          default: none
           options:
             none: None
             alt: 'Subtle gray'
             soft: 'Accent tint'
             accent: Accent
             dark: Dark
+        .bg_color:
+          type: colorpicker
+          label: 'Custom background color'
+          help: 'Hex color such as #0f766e. Overrides the Background preset.'
+        .text_color:
+          type: select
+          label: 'Text color'
+          help: 'Used with a custom background. Auto picks light or dark text for contrast.'
+          options:
+            auto: Auto
+            light: Light
+            dark: Dark
         .spacing:
           type: select
           label: 'Vertical spacing'
-          default: md
           options:
             none: None
             sm: Small
@@ -141,7 +150,6 @@ form:
         .width:
           type: select
           label: 'Content width'
-          default: default
           options:
             narrow: Narrow
             default: Default
@@ -150,7 +158,6 @@ form:
         .align:
           type: select
           label: Alignment
-          default: left
           options:
             left: Left
             center: Center
@@ -161,7 +168,6 @@ form:
           type: toggle
           label: 'Fade in on scroll'
           highlight: 1
-          default: 0
           options:
             1: PLUGIN_ADMIN.YES
             0: PLUGIN_ADMIN.NO
@@ -171,7 +177,6 @@ form:
           type: toggle
           label: 'Hide this block'
           highlight: 0
-          default: 0
           options:
             1: PLUGIN_ADMIN.YES
             0: PLUGIN_ADMIN.NO

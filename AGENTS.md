@@ -96,6 +96,15 @@ The live example of every block is at `/styleguide`.
 ### Change the look
 Set brand values (accent, radius, fonts, container) in Admin2 → Themes → MAW Starter, or `user/config/themes/maw-starter.yaml`. For deeper changes override `--maw-*` tokens in `css/custom.css`. Never hard-code colours in block CSS.
 
+### Custom section colors
+Any block can set `bg_color: '#0f766e'` (flat, next to `background`). It overrides the preset, and `text_color: auto|light|dark` picks the text tone (`auto` uses WCAG contrast through the `maw_contrast` filter).
+
+### Block-built Flex Objects (custom content types)
+1. Copy `user/blueprints/flex-objects/case-studies.yaml`. Use `FolderStorage` so every object gets its own media, and import `partials/blocks-field-flex` with `context: 'themes://maw-starter/blueprints'` (the field is named `blocks`, not `header.blocks`).
+2. Register it in `user/config/plugins/flex-objects.yaml` under `directories` as `blueprints://flex-objects/<name>.yaml`. Keep directory blueprints in `user/blueprints`, never behind `theme://`: Admin2's API requests can run without the theme initialized, and the directory then silently disappears from the admin.
+3. Front end: in `templates/flex/<type>/object/default.html.twig` use `{% include 'blocks/_render.html.twig' with {blocks: object.blocks, media_owner: object} %}`. Inside Flex render contexts use `grav.page`, because `page` is not passed in.
+4. In Admin2 the builder works on saved objects. It previews them at `/_maw-preview/<id>` using the object's media folder.
+
 ### Add a form
 Define it under `forms:` in the page frontmatter (Form plugin syntax) and add a `contact` block with `form: <name>`. See `user/pages/04.contact/blocks.md`. Set `cache_enable: false` on form pages.
 

@@ -1,6 +1,7 @@
 title: Pricing
 description: Pricing plans with features (one per line), button, and an optional featured plan.
 icon: fa-tags
+category: commerce
 example:
   type: pricing
   heading: Simple pricing

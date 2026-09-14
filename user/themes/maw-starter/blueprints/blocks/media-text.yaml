@@ -1,6 +1,7 @@
 title: Media + text
 description: Image beside text, with optional checklist and buttons. Alternate image_side for zig-zag layouts.
 icon: fa-image
+category: media
 example:
   type: media-text
   eyebrow: How it works

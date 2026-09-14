@@ -1,6 +1,7 @@
 title: Spacer
 description: Vertical space with optional divider line. Ignores shared section settings except class.
 icon: fa-arrows-up-down
+category: layout
 example:
   type: spacer
   size: md
