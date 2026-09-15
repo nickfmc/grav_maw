@@ -41,6 +41,10 @@ form:
                 cards: Cards
             header.items:
               type: list
+              new_item:
+                icon: fa-star
+                title: 'Feature title'
+                text: 'One or two sentences about this feature.'
               label: Items
               style: vertical
               collapsed: true
@@ -60,6 +64,10 @@ form:
                   label: 'Link URL (optional)'
             header.buttons:
               type: list
+              new_item:
+                label: 'Learn more'
+                url: '#'
+                style: secondary
               label: Buttons
               style: vertical
               btnLabel: 'Add button'

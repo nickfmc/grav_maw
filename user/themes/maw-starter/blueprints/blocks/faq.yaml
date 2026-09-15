@@ -26,6 +26,8 @@ form:
       validate: { type: bool }
     .items:
       type: list
+      # Starter content for items added in the visual builder
+      new_item: { question: 'New question?', answer: 'Write the answer here.' }
       label: Questions
       style: vertical
       collapsed: true

@@ -28,6 +28,11 @@ form:
               default: contact
             header.details:
               type: list
+              new_item:
+                icon: fa-phone
+                label: Phone
+                value: '(555) 000-0000'
+                url: 'tel:+15550000000'
               label: 'Contact details'
               style: vertical
               fields:

@@ -4,14 +4,14 @@
     {% block inner %}
         {% import 'macros/ui.html.twig' as ui %}
         {{ ui.head(block) }}
-        <div class="gallery grid grid--{{ block.columns|default(3) }}">
+        <div class="gallery grid grid--{{ block.columns|default(3) }}"{{ block.from_page ? '' : maw_edit_list('items', 'image') }}>
             {% for item in items %}
-                <figure class="gallery__item">
+                <figure class="gallery__item"{{ block.from_page ? '' : maw_edit_item(loop.index0) }}>
                     {% set m = maw_media(item.image, media_owner ?? page) %}
                     {% if m is maw_medium and block.lightbox is not same as(false) %}<a href="{{ m.url }}" class="gallery__link">{% endif %}
-                    {{ ui.image(item.image, media_owner ?? page, {alt: item.caption, width: 900, height: block.crop is same as(false) ? null : 675, class: 'rounded', sizes: '(max-width: 640px) 100vw, 33vw'}) }}
+                    {{ ui.image(item.image, media_owner ?? page, {alt: item.caption, width: 900, height: block.crop is same as(false) ? null : 675, class: 'rounded', sizes: '(max-width: 640px) 100vw, 33vw', edit: block.from_page ? null : 'items.' ~ loop.index0 ~ '.image'}) }}
                     {% if m is maw_medium and block.lightbox is not same as(false) %}</a>{% endif %}
-                    {% if item.caption %}<figcaption>{{ item.caption }}</figcaption>{% endif %}
+                    {% if item.caption %}<figcaption{{ maw_edit('items.' ~ loop.index0 ~ '.caption') }}>{{ item.caption }}</figcaption>{% endif %}
                 </figure>
             {% endfor %}
         </div>

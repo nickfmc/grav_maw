@@ -17,6 +17,9 @@
 /user/data/*
 !/user/data/.gitkeep
 !/user/data/.htaccess
+# MAW Builder: global sections and saved patterns are site content (commit them); revision history is per environment
+!/user/data/maw-builder/
+/user/data/maw-builder/revisions/
 /user/config/security.yaml
 .env
 .mcp.json

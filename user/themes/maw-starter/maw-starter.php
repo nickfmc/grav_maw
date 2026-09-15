@@ -55,6 +55,15 @@ class MawStarter extends Theme
         $env->addFilter(new TwigFilter('maw_embed_url', [$this, 'embedUrl']));
         $env->addFilter(new TwigFilter('maw_slug', [$this, 'slug']));
         $env->addFilter(new TwigFilter('maw_contrast', [$this, 'contrastTone']));
+        // Inline editing marker: ` data-maw-edit="heading"` inside the builder preview, empty on the live site.
+        $env->addFunction(new TwigFunction('maw_edit', [$this, 'editAttribute'], ['is_safe' => ['html']]));
+        // Same for Markdown output wrappers: ` data-maw-edit-md="text"` (+ data-maw-md-inline for |markdown(false)).
+        $env->addFunction(new TwigFunction('maw_edit_md', [$this, 'editMarkdownAttribute'], ['is_safe' => ['html']]));
+        // Image fields: ` data-maw-edit-image="image"` so the builder can open its media picker on click.
+        $env->addFunction(new TwigFunction('maw_edit_image', [$this, 'editImageAttribute'], ['is_safe' => ['html']]));
+        // Repeater (list) fields: container ` data-maw-list="items" data-maw-list-label="question"`, items ` data-maw-item="0"`.
+        $env->addFunction(new TwigFunction('maw_edit_list', [$this, 'editListAttribute'], ['is_safe' => ['html']]));
+        $env->addFunction(new TwigFunction('maw_edit_item', [$this, 'editItemAttribute'], ['is_safe' => ['html']]));
         // `{% if x is maw_medium %}` — true for Grav media objects (resizable), false for URL strings.
         $env->addTest(new TwigTest('maw_medium', static fn ($v) => $v instanceof MediaObjectInterface));
     }
@@ -209,6 +218,67 @@ class MawStarter extends Theme
 
         // Pick whichever of white (L=1) or near-black (#0f172a, L≈0.0097) gives the higher contrast ratio.
         return (1.05 / ($l + 0.05)) >= (($l + 0.05) / 0.0597) ? 'light' : 'dark';
+    }
+
+    /**
+     * Marks a plain-text element as inline-editable in the MAW Builder preview.
+     * `$path` is the field path inside the block's content, e.g. "heading", "items.2.title", "buttons.0.label".
+     * Only for single-line text fields: Markdown fields stay in the builder's side panel.
+     */
+    public function editAttribute(string $path): string
+    {
+        if (!isset($this->grav['maw_preview']) || !preg_match('/^[a-z0-9_]+(\.[a-z0-9_]+)*$/i', $path)) {
+            return '';
+        }
+
+        return ' data-maw-edit="' . htmlspecialchars($path, ENT_QUOTES) . '"';
+    }
+
+    /**
+     * Marks the wrapper of a Markdown field as inline-editable in the MAW Builder preview.
+     * Put it on the element whose children are the rendered Markdown. `$inline` = rendered with |markdown(false)
+     * (no paragraphs/lists), so the editor only allows bold, italic and links.
+     */
+    public function editMarkdownAttribute(string $path, bool $inline = false): string
+    {
+        if (!isset($this->grav['maw_preview']) || !preg_match('/^[a-z0-9_]+(\.[a-z0-9_]+)*$/i', $path)) {
+            return '';
+        }
+
+        return ' data-maw-edit-md="' . htmlspecialchars($path, ENT_QUOTES) . '"' . ($inline ? ' data-maw-md-inline="1"' : '');
+    }
+
+    /** Marks an image (or its placeholder) as click-to-replace in the MAW Builder preview. */
+    public function editImageAttribute(string $path): string
+    {
+        if (!isset($this->grav['maw_preview']) || !preg_match('/^[a-z0-9_]+(\.[a-z0-9_]+)*$/i', $path)) {
+            return '';
+        }
+
+        return ' data-maw-edit-image="' . htmlspecialchars($path, ENT_QUOTES) . '"';
+    }
+
+    /**
+     * Marks the element that directly contains a repeater's items, so the builder can offer "+ Add <label>" inline.
+     * `$label` is the singular noun shown on the button ("question", "plan", "logo").
+     */
+    public function editListAttribute(string $path, string $label = 'item'): string
+    {
+        if (!isset($this->grav['maw_preview']) || !preg_match('/^[a-z0-9_]+(\.[a-z0-9_]+)*$/i', $path)) {
+            return '';
+        }
+
+        return ' data-maw-list="' . htmlspecialchars($path, ENT_QUOTES) . '" data-maw-list-label="' . htmlspecialchars($label, ENT_QUOTES) . '"';
+    }
+
+    /** Marks one repeater item (its index in the stored list) for the inline move / duplicate / delete toolbar. */
+    public function editItemAttribute(int|string $index): string
+    {
+        if (!isset($this->grav['maw_preview']) || !ctype_digit((string) $index)) {
+            return '';
+        }
+
+        return ' data-maw-item="' . (int) $index . '"';
     }
 
     public function slug(?string $value): string

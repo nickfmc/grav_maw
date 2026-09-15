@@ -34,6 +34,12 @@ form:
                 type: int
             header.items:
               type: list
+              new_item:
+                title: 'Card title'
+                meta: Category
+                text: 'A short description of this card.'
+                url: '#'
+                link_label: 'Learn more'
               label: Cards
               style: vertical
               collapsed: true
@@ -65,6 +71,10 @@ form:
                   label: 'Link label'
             header.buttons:
               type: list
+              new_item:
+                label: 'Learn more'
+                url: '#'
+                style: secondary
               label: Buttons
               style: vertical
               btnLabel: 'Add button'

@@ -24,6 +24,14 @@ form:
               rows: 2
             header.items:
               type: list
+              new_item:
+                name: 'Plan name'
+                price: $49
+                period: /mo
+                description: 'Who this plan is for.'
+                features: "Feature one\nFeature two\nFeature three"
+                button_label: 'Choose plan'
+                button_url: '#'
               label: Plans
               style: vertical
               collapsed: true

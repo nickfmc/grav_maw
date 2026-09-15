@@ -21,6 +21,8 @@ form:
       default: contact
     .details:
       type: list
+      # Starter content for items added in the visual builder
+      new_item: { icon: fa-phone, label: Phone, value: '(555) 000-0000', url: 'tel:+15550000000' }
       label: Contact details
       style: vertical
       fields:

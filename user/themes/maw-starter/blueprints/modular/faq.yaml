@@ -42,6 +42,9 @@ form:
                 type: bool
             header.items:
               type: list
+              new_item:
+                question: 'New question?'
+                answer: 'Write the answer here.'
               label: Questions
               style: vertical
               collapsed: true

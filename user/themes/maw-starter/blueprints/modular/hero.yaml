@@ -41,6 +41,10 @@ form:
               label: 'Image alt text'
             header.buttons:
               type: list
+              new_item:
+                label: 'Learn more'
+                url: '#'
+                style: secondary
               label: Buttons
               style: vertical
               btnLabel: 'Add button'

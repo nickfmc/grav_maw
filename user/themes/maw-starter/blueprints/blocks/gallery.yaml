@@ -34,6 +34,8 @@ form:
       validate: { type: bool }
     .items:
       type: list
+      # Starter content for items added in the visual builder
+      new_item: { caption: 'Image caption' }
       label: Images
       style: vertical
       collapsed: true

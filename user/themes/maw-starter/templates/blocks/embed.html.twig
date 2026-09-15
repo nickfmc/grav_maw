@@ -12,6 +12,6 @@
                 <iframe src="{{ src|e }}" title="{{ (block.title ?: block.heading ?: 'Embedded content')|e }}" loading="lazy" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
         {% endif %}
-        {% if block.caption %}<p class="text-muted embed__caption">{{ block.caption }}</p>{% endif %}
+        {% if block.caption %}<p class="text-muted embed__caption"{{ maw_edit('caption') }}>{{ block.caption }}</p>{% endif %}
     {% endblock %}
 {% endembed %}

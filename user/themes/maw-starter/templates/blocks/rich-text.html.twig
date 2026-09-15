@@ -6,7 +6,7 @@
         {% if block.html %}
             <div class="prose{{ block.wide ? ' prose--wide' }}">{{ block.html|raw }}</div>
         {% else %}
-            {{ ui.rich(block.text, block.wide) }}
+            {{ ui.rich(block.text, block.wide, 'text') }}
         {% endif %}
         {{ ui.buttons(block.buttons) }}
     {% endblock %}

@@ -96,6 +96,31 @@ The live example of every block is at `/styleguide`.
 ### Change the look
 Set brand values (accent, radius, fonts, container) in Admin2 → Themes → MAW Starter, or `user/config/themes/maw-starter.yaml`. For deeper changes override `--maw-*` tokens in `css/custom.css`. Never hard-code colours in block CSS.
 
+### Inline editing (theme contract)
+Wrap single-line text in block templates with the `maw_edit()` helper so editors can type on the canvas:
+`<h2{{ maw_edit('heading') }}>{{ block.heading }}</h2>`. For list items use `maw_edit('items.' ~ loop.index0 ~ '.title')`, looping the **original** list (not a `|filter`ed copy) so indexes match the data. The helper outputs nothing on the live site.
+
+Markdown fields use `maw_edit_md()` on the element that directly wraps the rendered Markdown:
+`<div class="lead"{{ maw_edit_md('text') }}>{{ block.text|markdown|raw }}</div>`, or `maw_edit_md('items.' ~ loop.index0 ~ '.text', true)` for `|markdown(false)` output. For `ui.rich()`, pass the path as the third argument.
+- If the rendered HTML converts back to the stored Markdown (paragraphs, bold/italic, links, lists, h2–h4, code), editors get visual editing with a toolbar.
+- Otherwise (tables, images, raw HTML, shortcodes) they get a Markdown popover.
+- Never put other markup inside that wrapper, or visual mode will be disabled for the field.
+
+Images: pass the field path to the image macro, `ui.image(block.image, media_owner ?? page, {…, edit: 'image'})` or `edit: 'items.' ~ loop.index0 ~ '.image'`. In the preview the image gets a "Replace image" badge, and clicking it opens the media library. Leave `edit` out for images that don't come from a field (e.g. gallery `from_page`).
+
+Repeaters (`list` fields): put `maw_edit_list('items', 'question')` on the element that directly contains the items (the second argument is the singular noun for the "+ Add question" button), and `maw_edit_item(loop.index0)` on each item element, looping the original list. The builder then offers add, move, duplicate and delete on the canvas, and new items open with their first text field ready to type.
+
+Starter content for new items goes on the list field in the block schema as `new_item:`, e.g. `new_item: { icon: fa-phone, label: Phone, value: '(555) 000-0000', url: 'tel:+15550000000' }`. Both the canvas "+ Add" and the side panel's "Add item" use it. Without it the builder falls back to field `default:` values, then "New <noun>" / the field label for text fields and `#` for URL fields.
+
+### Global (synced) sections
+- Stored in `user/data/maw-builder/sections/<id>.yaml` (committed) and placed with `- type: global` / `global: { section: <id> }`.
+- Rendered by the maw-builder plugin (`templates/blocks/global.html.twig` + `maw_global_section()`). Blocks inside a global section get `maw_nested` and no `data-block-index`.
+- Global sections can't contain other global blocks. Their images must come from the site library (`user://media/...`), because they appear on many pages.
+- API: `GET/POST /maw-builder/sections`, `GET/PATCH/DELETE /maw-builder/sections/{id}`. Delete is refused while in use unless `?force=1`.
+
+### Revisions
+The plugin snapshots `blocks` after every page / Flex object save (`onAdminAfterSave`) and every global section save, skipping identical versions. It keeps the last 50 (`plugins.maw-builder.revisions.keep`) in `user/data/maw-builder/revisions/`, which is git-ignored. API: `GET /maw-builder/revisions?context=page&route=/about` (or `context=flex&type=&key=`, `context=section&id=`) and `GET /maw-builder/revisions/{id}?…`.
+
 ### Custom section colors
 Any block can set `bg_color: '#0f766e'` (flat, next to `background`). It overrides the preset, and `text_color: auto|light|dark` picks the text tone (`auto` uses WCAG contrast through the `maw_contrast` filter).
 

@@ -42,7 +42,7 @@
     {% if custom_bg %} style="--section-bg: {{ custom_bg }}"{% endif %}
     {% if block.anchor %} id="{{ block.anchor|maw_slug }}"{% endif %}
     {% if block.reveal %} data-reveal{% endif %}
-    data-block="{{ type }}"{% if index is defined %} data-block-index="{{ index - 1 }}"{% endif %}>
+    data-block="{{ type }}"{% if index is defined and not maw_nested|default(false) %} data-block-index="{{ index - 1 }}"{% endif %}>
     <div class="container{{ width != 'default' ? ' container--' ~ width|maw_slug }}">
         {% block inner %}{% endblock %}
     </div>

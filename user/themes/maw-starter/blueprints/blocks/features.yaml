@@ -33,6 +33,8 @@ form:
       options: { plain: Plain, cards: Cards }
     .items:
       type: list
+      # Starter content for items added in the visual builder
+      new_item: { icon: fa-star, title: 'Feature title', text: 'One or two sentences about this feature.' }
       label: Items
       style: vertical
       collapsed: true

@@ -3,6 +3,8 @@ form:
   fields:
     .buttons:
       type: list
+      # Starter content for items added in the visual builder
+      new_item: { label: 'Learn more', url: '#', style: secondary }
       label: Buttons
       style: vertical
       btnLabel: Add button

@@ -3,12 +3,12 @@
         {% import 'macros/ui.html.twig' as ui %}
         <div class="split{{ block.image_side == 'right' ? ' split--reverse' }} media-text">
             <div class="media-text__media">
-                {{ ui.image(block.image, media_owner ?? page, {alt: block.image_alt, width: 1100, height: block.image_ratio == 'square' ? 1100 : null, class: 'rounded'}) }}
+                {{ ui.image(block.image, media_owner ?? page, {alt: block.image_alt, width: 1100, height: block.image_ratio == 'square' ? 1100 : null, class: 'rounded', edit: 'image'}) }}
             </div>
             <div class="media-text__content stack">
-                {% if block.eyebrow %}<span class="eyebrow">{{ block.eyebrow }}</span>{% endif %}
-                {% if block.heading %}<h2>{{ block.heading }}</h2>{% endif %}
-                {% if block.html %}<div class="prose">{{ block.html|raw }}</div>{% else %}{{ ui.rich(block.text) }}{% endif %}
+                {% if block.eyebrow %}<span class="eyebrow"{{ maw_edit('eyebrow') }}>{{ block.eyebrow }}</span>{% endif %}
+                {% if block.heading %}<h2{{ maw_edit('heading') }}>{{ block.heading }}</h2>{% endif %}
+                {% if block.html %}<div class="prose">{{ block.html|raw }}</div>{% else %}{{ ui.rich(block.text, false, 'text') }}{% endif %}
                 {% if block.checklist %}
                     <ul class="checklist">
                         {% for line in block.checklist|split("\n")|map(l => l|trim)|filter(l => l) %}

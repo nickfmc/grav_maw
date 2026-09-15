@@ -17,6 +17,9 @@ form:
               label: Heading
             header.items:
               type: list
+              new_item:
+                name: 'Company name'
+                url: '#'
               label: Logos
               style: vertical
               collapsed: true

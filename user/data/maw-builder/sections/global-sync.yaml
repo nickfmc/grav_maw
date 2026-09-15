@@ -1,0 +1,24 @@
+id: global-sync
+title: 'Global Sync'
+created: 1789403823
+updated: 1789403823
+updated_by: nickfmc
+blocks:
+  -
+    type: hero
+    hero:
+      layout: split
+      eyebrow: New
+      heading: 'Build faster with Msfasda'
+      text: 'A flat-file CMS your team and your AI agents can both work with.asd '
+      image: hero.jpg
+      image_alt: 'Product screenshot'
+      buttons:
+        -
+          label: 'Get started'
+          url: /contact
+          style: primary
+        -
+          label: 'Learn more'
+          url: '#features'
+          style: secondary

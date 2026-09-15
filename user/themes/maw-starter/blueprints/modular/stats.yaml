@@ -24,6 +24,9 @@ form:
               rows: 2
             header.items:
               type: list
+              new_item:
+                value: 100+
+                label: 'Stat label'
               label: Stats
               style: vertical
               fields:

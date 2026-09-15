@@ -1,0 +1,11 @@
+id: footer-cta
+title: 'Footer CTA'
+created: 1789347337
+updated: 1789347337
+updated_by: nickfmc
+blocks:
+  -
+    type: cta
+    background: dark
+    cta:
+      heading: 'GLOBAL CTA HEADING v2'

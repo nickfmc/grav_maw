@@ -12,6 +12,8 @@ form:
     .heading: { type: text, label: Heading }
     .items:
       type: list
+      # Starter content for items added in the visual builder
+      new_item: { name: 'Company name', url: '#' }
       label: Logos
       style: vertical
       collapsed: true

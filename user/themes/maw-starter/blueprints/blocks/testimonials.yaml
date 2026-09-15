@@ -14,6 +14,8 @@ form:
     .intro: { type: textarea, label: Intro (markdown), rows: 2 }
     .items:
       type: list
+      # Starter content for items added in the visual builder
+      new_item: { quote: 'What the client said about working with you.', name: 'Client name', role: 'Role, Company' }
       label: Testimonials
       style: vertical
       collapsed: true

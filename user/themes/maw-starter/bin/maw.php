@@ -456,6 +456,10 @@ function lint(string $themeDir, string $root): int
             }
             foreach ((array) ($header[$list] ?? []) as $i => $block) {
                 $type = is_array($block) ? ($block['type'] ?? null) : null;
+                // global is provided by the maw-builder plugin (a reference to a synced section), not by the theme.
+                if ($type === 'global' && is_dir($root . '/user/plugins/maw-builder')) {
+                    continue;
+                }
                 if (!$type || !isset($blocks[$type])) {
                     fwrite(STDOUT, "ERROR $rel: {$list}[{$i}] unknown type `" . ($type ?? 'none') . "`\n");
                     $errors++;
