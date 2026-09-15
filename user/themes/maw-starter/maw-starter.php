@@ -55,6 +55,8 @@ class MawStarter extends Theme
         $env->addFilter(new TwigFilter('maw_embed_url', [$this, 'embedUrl']));
         $env->addFilter(new TwigFilter('maw_slug', [$this, 'slug']));
         $env->addFilter(new TwigFilter('maw_contrast', [$this, 'contrastTone']));
+        // `block.hide_on|maw_visibility` → ['hide-on-mobile', ...] (shared setting, see css/utilities.css)
+        $env->addFilter(new TwigFilter('maw_visibility', [$this, 'visibilityClasses']));
         // Inline editing marker: ` data-maw-edit="heading"` inside the builder preview, empty on the live site.
         $env->addFunction(new TwigFunction('maw_edit', [$this, 'editAttribute'], ['is_safe' => ['html']]));
         // Same for Markdown output wrappers: ` data-maw-edit-md="text"` (+ data-maw-md-inline for |markdown(false)).
@@ -66,6 +68,26 @@ class MawStarter extends Theme
         $env->addFunction(new TwigFunction('maw_edit_item', [$this, 'editItemAttribute'], ['is_safe' => ['html']]));
         // `{% if x is maw_medium %}` — true for Grav media objects (resizable), false for URL strings.
         $env->addTest(new TwigTest('maw_medium', static fn ($v) => $v instanceof MediaObjectInterface));
+    }
+
+    /**
+     * Per-device visibility classes from the `hide_on` setting. Accepts a list (`[mobile, tablet]`),
+     * a comma list (`mobile,tablet`) or a map (`{mobile: true}`). Unknown values are ignored.
+     * @return list<string>
+     */
+    public function visibilityClasses(mixed $value): array
+    {
+        if (is_string($value)) {
+            $value = explode(',', $value);
+        } elseif (is_array($value) && !array_is_list($value)) {
+            $value = array_keys(array_filter($value));
+        }
+        if (!is_array($value)) {
+            return [];
+        }
+        $devices = array_intersect(['mobile', 'tablet', 'desktop'], array_map(fn ($v) => strtolower(trim((string) $v)), $value));
+
+        return array_values(array_map(fn ($d) => 'hide-on-' . $d, $devices));
     }
 
     /**

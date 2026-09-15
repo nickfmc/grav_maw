@@ -64,7 +64,8 @@
     --maw-shadow: 0 4px 16px rgb(15 23 42 / 0.08);
     --maw-shadow-lg: 0 18px 48px rgb(15 23 42 / 0.14);
 
-    /* Layout */
+    /* Layout. Breakpoints (media queries can't read custom properties, so they're literal in the CSS):
+       mobile ≤ 640px · tablet 641–960px · desktop ≥ 961px (also used by the `hide_on` block setting) */
     --maw-container: 72rem;
     --maw-container-narrow: 44rem;
     --maw-container-wide: 90rem;

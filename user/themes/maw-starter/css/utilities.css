@@ -14,4 +14,10 @@
   .shadow { box-shadow: var(--maw-shadow); } .shadow-lg { box-shadow: var(--maw-shadow-lg); }
   .border { border: 1px solid var(--maw-border); }
   .hide-mobile { } @media (max-width: 640px) { .hide-mobile { display: none !important; } }
+
+  /* Per-device visibility (block setting `hide_on`). Breakpoints: see tokens.css.
+     The builder preview (html.maw-preview) keeps them visible and labels them instead, so they stay editable. */
+  @media (max-width: 640px) { html:not(.maw-preview) .hide-on-mobile { display: none !important; } }
+  @media (min-width: 641px) and (max-width: 960px) { html:not(.maw-preview) .hide-on-tablet { display: none !important; } }
+  @media (min-width: 961px) { html:not(.maw-preview) .hide-on-desktop { display: none !important; } }
 }

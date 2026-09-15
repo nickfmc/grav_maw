@@ -10,6 +10,8 @@
     align       left | center
     class       extra CSS classes
     reveal      true to fade in on scroll
+    hidden      true to not render the block at all
+    hide_on     [mobile, tablet, desktop]: hide on those screen sizes (css/utilities.css)
 
   Also enqueues css/blocks/<type>.css once, if that file exists.
 
@@ -35,7 +37,7 @@
     block.align ? 'section--align-' ~ block.align|maw_slug,
     block.variant ? 'block--' ~ type ~ '--' ~ block.variant|maw_slug,
     block.class
-]|filter(c => c) %}
+]|merge(block.hide_on|default([])|maw_visibility)|filter(c => c) %}
 {% set width = block.width|default(default_width|default('default')) %}
 
 <section class="{{ classes|join(' ')|e }}"

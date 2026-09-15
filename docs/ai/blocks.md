@@ -32,6 +32,7 @@ If you write content flat by mistake, run `php user/themes/maw-starter/bin/maw.p
 | `class` | text | '' |
 | `reveal` | 1 \| 0 | 0 |
 | `hidden` | 1 \| 0 | 0 |
+| `hide_on` | mobile \| tablet \| desktop | '' |
 
 `buttons` (on blocks that list it) is `[{label, url, style: primary|secondary|ghost, icon, new_tab}]`.
 Images are a filename in the page folder, `user://media/...`, `theme://images/...` or a full URL.

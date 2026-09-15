@@ -63,7 +63,7 @@ A block has a `type`, flat shared settings, and its **content nested under a key
 ```yaml
 blocks:
   - type: features          # must match blueprints/blocks/features.yaml
-    background: alt         # shared settings, flat: anchor, background, spacing, width, align, class, reveal, hidden
+    background: alt         # shared settings, flat: anchor, background, spacing, width, align, class, reveal, hidden, hide_on
     features:               # content fields, nested under the type name
       heading: Why us
       columns: 3
@@ -117,9 +117,21 @@ Starter content for new items goes on the list field in the block schema as `new
 - Rendered by the maw-builder plugin (`templates/blocks/global.html.twig` + `maw_global_section()`). Blocks inside a global section get `maw_nested` and no `data-block-index`.
 - Global sections can't contain other global blocks. Their images must come from the site library (`user://media/...`), because they appear on many pages.
 - API: `GET/POST /maw-builder/sections`, `GET/PATCH/DELETE /maw-builder/sections/{id}`. Delete is refused while in use unless `?force=1`.
+- Every write bumps the section's `rev`. `PATCH` with `base_rev` is refused with 409 if someone saved in between (retry with `?force=1` to overwrite). Saving a section clears Flex render caches and fires `onMawGlobalSectionChanged` (`{id, action}`), which is the hook for CDN purges.
 
 ### Revisions
 The plugin snapshots `blocks` after every page / Flex object save (`onAdminAfterSave`) and every global section save, skipping identical versions. It keeps the last 50 (`plugins.maw-builder.revisions.keep`) in `user/data/maw-builder/revisions/`, which is git-ignored. API: `GET /maw-builder/revisions?context=page&route=/about` (or `context=flex&type=&key=`, `context=section&id=`) and `GET /maw-builder/revisions/{id}?…`.
+
+The History panel's **Compare** shows block- and field-level changes between a version and the editor (or the version before it). The diff logic is `src/lib/diff.js`.
+
+### Editing safety (builder)
+- **Save confirmation:** after "Update", the builder polls `POST /maw-builder/state` until the saved blocks match what it sent. If they don't within 10 s, it shows a "not saved" error and the page stays dirty.
+- **Local backup:** unsaved edits are mirrored to localStorage (`maw-builder:draft:<owner>:<field>`), and the builder offers to restore them after a crash or reload.
+- **Presence and soft lock:** open edit forms heartbeat to `POST /maw-builder/presence` (sessions live in `cache://maw-builder/presence`, 90 s TTL, released when the tab closes). Opening the builder while someone else is editing starts read-only; "Edit anyway" takes over and warns the other editor. A save by someone else since you loaded shows a warning.
+- **Multi-select and clipboard:** Shift/Ctrl-click in the outline or preview. Ctrl+C/X/V copy blocks as JSON (system clipboard + localStorage). Pasting onto another page copies the referenced page images through `POST /maw-builder/media/copy`.
+
+### Per-device visibility
+`hide_on: [mobile, tablet, desktop]` (shared setting) adds `hide-on-<device>` classes, hidden by `css/utilities.css` at ≤640px / 641–960px / ≥961px. The content stays in the HTML and in `/<route>.md`. The builder preview shows these blocks striped instead of hiding them. `hidden: true` still means "don't render at all".
 
 ### Custom section colors
 Any block can set `bg_color: '#0f766e'` (flat, next to `background`). It overrides the preset, and `text_color: auto|light|dark` picks the text tone (`auto` uses WCAG contrast through the `maw_contrast` filter).
@@ -145,6 +157,7 @@ Define it under `forms:` in the page frontmatter (Form plugin syntax) and add a 
 - In Admin2 blueprints, fields inside an `element` save under the element key, and a `fieldset` inside an element binds to the wrong path. Keep block blueprints flat (no fieldsets). Add shared lists with a form-level `import@`, as `_buttons` does.
 - Don't edit generated files (`blocks-field.yaml`, `blueprints/modular/*`, `docs/ai/blocks.md`, `user/pages/styleguide/blocks.md`). Run `sync`/`styleguide` instead.
 - Escape output. Only use `|raw` on Markdown-rendered or trusted HTML.
+- The API plugin caches its route table and only rebuilds it when a plugin's `blueprints.yaml` changes. After adding an API route, bump the plugin `version` in `blueprints.yaml` (or run `bin/grav clearcache`), otherwise the new endpoint returns 404.
 - Admin2 custom fields are web components at `admin-next/fields/<name>.js` (the planned `maw-builder` plugin).
 
 ## Commands
@@ -158,6 +171,9 @@ php bin/gpm install <package>                            # install plugins
 php user/themes/maw-starter/bin/maw.php sync             # regenerate derived block files
 php user/themes/maw-starter/bin/maw.php lint             # validate blocks + pages
 php user/themes/maw-starter/bin/maw.php normalize        # convert flat blocks to the Admin2 shape
+php user/plugins/maw-builder/tests/php/run.php           # builder PHP tests (no dependencies)
+cd user/plugins/maw-builder && npm test                  # builder JS tests (node --test)
+cd user/plugins/maw-builder && npm run build             # rebuild admin-next/fields/blocks.js after src/ changes
 curl http://localhost:8000/about.md                      # what an agent sees
 ```
 

@@ -20,6 +20,8 @@
 # MAW Builder: global sections and saved patterns are site content (commit them); revision history is per environment
 !/user/data/maw-builder/
 /user/data/maw-builder/revisions/
+/user/data/maw-builder/**/.lock
+/user/data/maw-builder/**/*.tmp
 /user/config/security.yaml
 .env
 .mcp.json

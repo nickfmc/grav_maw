@@ -182,3 +182,14 @@ form:
             0: PLUGIN_ADMIN.NO
           validate:
             type: bool
+        .hide_on:
+          type: checkboxes
+          label: 'Hide on devices'
+          help: 'Mobile up to 640px, tablet 641-960px, desktop above 960px.'
+          options:
+            mobile: Mobile
+            tablet: Tablet
+            desktop: Desktop
+          use: keys
+          validate:
+            type: commalist
