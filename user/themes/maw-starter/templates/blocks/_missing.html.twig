@@ -1,6 +1,0 @@
-{# Fallback for an unknown block type. Silent for visitors; visible when the debugger is on or a user is logged in. #}
-{% if config.system.debugger.enabled or grav.user.authenticated %}
-    <div class="container" style="padding: 1rem 0">
-        <p class="notices">Unknown block type <code>{{ block.type|e }}</code>. Create <code>templates/blocks/{{ block.type|e }}.html.twig</code> and <code>blueprints/blocks/{{ block.type|e }}.yaml</code>.</p>
-    </div>
-{% endif %}

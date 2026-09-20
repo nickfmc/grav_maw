@@ -2,6 +2,8 @@
 
 This is the guide for AI coding agents (Claude Code, Cursor, Codex, etc.) and for humans. Read it before changing anything.
 
+> **This is the development sandbox.** The theme and builder live in their own repos under `C:\website_ongoing_git\Grav_system` (`maw-starter`, `maw-builder`), and new client sites are created with `Grav_system\maw-kit\maw.cmd new <name>`. Work on the theme or builder here, but run `git` for those changes **inside the junction folders** (they're their own repos, ignored by this one).
+
 ## What this repo is
 
 A starter for new client sites on **Grav 2.1** (flat-file PHP CMS). It includes **Admin2** (a SvelteKit admin that talks to the API plugin) and the **`maw-starter`** theme, a block-based page builder built on design tokens with no build step.
@@ -18,7 +20,8 @@ A starter for new client sites on **Grav 2.1** (flat-file PHP CMS). It includes 
 | `user/plugins/*` (installed) | GPM packages (admin2, api, login, form, email, ...) | No, update via `bin/gpm` |
 | `user/config/` | Site config (`system.yaml`, `site.yaml`, `plugins/*.yaml`, `themes/*.yaml`) | Yes |
 | `user/pages/` | Content | Yes |
-| `user/themes/maw-starter/` | **The theme. Most work happens here** | Yes |
+| `user/themes/maw-starter/` | **The theme**: a junction to `../Grav_system/maw-starter` (its own git repo). Commit theme changes there. | Yes |
+| `user/plugins/maw-builder/` | **The builder**: a junction to `../Grav_system/maw-builder` (its own git repo). Commit builder changes there. | Yes |
 | `user/themes/quark2/` | Stock theme kept for reference | No |
 | `docs/ai/` | Reference docs; `blocks.md` is generated | See below |
 | `cache/ logs/ tmp/ backup/ images/ assets/` | Runtime, git-ignored | No |

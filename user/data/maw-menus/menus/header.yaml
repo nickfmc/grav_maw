@@ -1,0 +1,50 @@
+schema: 1
+id: header
+title: Header
+max_depth: 2
+rev: 5
+created: 1789922275
+updated: 1789925677
+updated_by: nickfmc
+items:
+  -
+    key: 53aa66
+    type: page
+    route: /
+  -
+    key: 42a702
+    type: page
+    children:
+      -
+        key: 3b730b
+        type: page
+        label: Overview
+        route: /about
+      -
+        key: b3685d
+        type: heading
+        label: Resources
+      -
+        key: c90f61
+        type: url
+        label: Handbook
+        description: 'Opens in a new tab'
+        url: 'https://example.org/handbook'
+      -
+        key: b099b4
+        type: page
+        label: 'Updates HERE'
+        route: /blog
+    route: /about
+  -
+    key: e61317
+    type: page
+    label: 'Book a call'
+    style:
+      - button
+    route: /contact
+  -
+    key: 59acf1
+    type: page
+    label: 'Hidden page'
+    route: /test-builder

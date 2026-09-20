@@ -12,6 +12,12 @@
       "runtimeExecutable": "php",
       "runtimeArgs": ["-c", "C:\\Users\\nickf\\AppData\\Local\\Temp\\claude\\C--website-ongoing-git-grav-maw\\cbbba591-79ff-4941-98ef-7ed7f8017ac1\\scratchpad\\php.ini", "-S", "localhost:8010", "system/router.php"],
       "port": 8010
+    },
+    {
+      "name": "samathas-house",
+      "runtimeExecutable": "C:\\website_ongoing_git\\Grav_system\\maw-kit\\maw.cmd",
+      "runtimeArgs": ["serve", "-Path", "C:\\website_ongoing_git\\samathas-house", "-Port", "8000"],
+      "port": 8000
     }
   ]
 }

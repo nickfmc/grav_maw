@@ -1,4 +1,0 @@
-/* Block: media-text - loaded only on pages that use it (see blocks/_section.html.twig) */
-@layer blocks {
-.block--media-text .media-text__media img { width: 100%; }
-}

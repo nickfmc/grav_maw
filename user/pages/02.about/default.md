@@ -8,7 +8,7 @@ blocks:
         hero:
             layout: split
             eyebrow: wersdf
-            heading: 'Build faster with Msfasda'
+            heading: 'Build faster with'
             text: 'A flat-file CMS your team and your AI agents can both work with.awdasdasd'
             image: about-hero.png
             image_alt: 'Product screenshot'
@@ -21,6 +21,10 @@ blocks:
                     label: 'Learn more'
                     url: '#features'
                     style: secondary
+    -
+        type: global
+        global:
+            section: ready-to-start
     -
         type: faq
         background: soft
@@ -38,6 +42,9 @@ blocks:
                 -
                     question: 'Another One'
                     answer: 'Can type while its updating.'
+                -
+                    question: 'New question?'
+                    answer: 'asdasdasd asdasdasd asda'
             schema: true
             open_first: true
 ---

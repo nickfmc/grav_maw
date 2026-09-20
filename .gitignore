@@ -22,6 +22,10 @@
 /user/data/maw-builder/revisions/
 /user/data/maw-builder/**/.lock
 /user/data/maw-builder/**/*.tmp
+# MAW Menus: menus are site content (commit them)
+!/user/data/maw-menus/
+/user/data/maw-menus/**/.lock
+/user/data/maw-menus/**/*.tmp
 /user/config/security.yaml
 .env
 .mcp.json
@@ -37,3 +41,9 @@ Thumbs.db
 # Grav 2 per-site secrets (salts, API signing keys) — generated on first run, never commit
 /user/config/*-private.php
 /user/config/plugins/*-private.php
+
+# Dev sandbox: junctions to the standalone repos in ../Grav_system (commit theme/builder changes there)
+/user/themes/maw-starter
+/user/plugins/maw-builder
+/user/plugins/maw-menus
+

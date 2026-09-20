@@ -1,8 +1,0 @@
-/* Block: cta - loaded only on pages that use it (see blocks/_section.html.twig) */
-@layer blocks {
-.block--cta .cta { text-align: center; }
-.block--cta .cta > * + * { margin-top: var(--maw-space-4); }
-.block--cta .cta__title { font-size: var(--maw-text-3xl); }
-.block--cta .button-row { justify-content: center; }
-.block--cta.section--bg-accent .lead { color: inherit; opacity: 0.9; }
-}

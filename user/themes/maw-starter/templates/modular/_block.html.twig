@@ -1,7 +1,0 @@
-{#
-  Shared renderer for modular modules. A module's frontmatter holds the block fields directly
-  (heading, items, buttons, background...), and its Markdown body becomes `html`.
-  Each modular/<type>.html.twig just sets `type` and includes this file.
-#}
-{% set block = (page.header|array)|merge({type: type, html: page.content|trim ? page.content : null}) %}
-{% include 'blocks/' ~ type ~ '.html.twig' with {block: block, first: false} %}

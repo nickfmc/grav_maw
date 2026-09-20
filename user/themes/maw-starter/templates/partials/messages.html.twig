@@ -1,8 +1,0 @@
-{% set flash = grav.messages.fetch|default([]) %}
-{% if flash|length %}
-    <div class="container">
-        {% for message in flash %}
-            <div class="notices notices--{{ message.scope|e('html_attr') }}" role="status">{{ message.message|raw }}</div>
-        {% endfor %}
-    </div>
-{% endif %}

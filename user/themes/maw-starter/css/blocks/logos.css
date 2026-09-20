@@ -1,9 +1,0 @@
-/* Block: logos - loaded only on pages that use it (see blocks/_section.html.twig) */
-@layer blocks {
-.block--logos .logos__heading { text-align: center; color: var(--maw-text-muted); font-size: var(--maw-text-sm); font-weight: 600; margin-bottom: var(--maw-space-5); }
-.block--logos .logos { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--maw-space-5) var(--maw-space-8); }
-.block--logos .logos__item img { max-height: 2.5rem; width: auto; filter: grayscale(1); opacity: 0.7; transition: all var(--maw-duration); }
-.block--logos .logos__item a:hover img { filter: none; opacity: 1; }
-.block--logos .logos__name { font-weight: 800; font-size: var(--maw-text-lg); color: var(--maw-text-muted); letter-spacing: -0.02em; }
-.block--logos .logos__item a { text-decoration: none; }
-}

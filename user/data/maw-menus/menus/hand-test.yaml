@@ -1,0 +1,14 @@
+schema: 1
+id: hand-test
+title: Hand Test
+max_depth: 2
+rev: 1
+items:
+  - { key: a1b2c3, type: page, route: /about }
+  - type: page
+    route: /blog
+    label: Updates
+    children:
+      - { type: heading, label: 'By topic' }
+      - { type: url, url: 'tel:+15550000000', label: 'Call us', icon: fa-phone }
+  - { key: zz9, type: page, route: /contact, label: 'Book a call', style: [button] }
